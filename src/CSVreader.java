@@ -1,27 +1,26 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
 import java.util.*;
 
 class CSVreader
 {
-    // write a method to read CSV files using the "," delimiter and return a 2D array
-    public static String[][] readCSV(String pathdir) {
-        String[][] dataDump = new String[100][100];
+    public static ArrayList<String[]> readCSV(String pathdir) {
+        ArrayList<String[]> data = new ArrayList<String[]>();
         try {
             File myObj = new File(pathdir);
             Scanner myReader = new Scanner(myObj);
-            int i = 0;
             while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                dataDump[i] = data.split(",");
-                i++;
+                String dataLine = myReader.nextLine();
+                String[] dataLineArray = dataLine.split(",");
+                data.add(dataLineArray);
             }
             myReader.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        return dataDump;
+        return data;
     }
 
     public static void writeToCSV(String pathdir, String[][] data) {
@@ -30,10 +29,10 @@ class CSVreader
     }
 
     public static void main(String[] args) {
-        String[][] dataDump = readCSV("db.csv");
-        for (int i = 0; i < dataDump.length-1; i++) {
-            for (int j = 0; j < dataDump[i].length; j++) {
-                System.out.print(dataDump[i][j] + " ");
+        ArrayList<String[]> data = readCSV("db.csv");
+        for (String[] line : data) {
+            for (String word : line) {
+                System.out.print(word + " ");
             }
             System.out.println();
         }
