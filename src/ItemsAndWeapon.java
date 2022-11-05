@@ -29,5 +29,4 @@ public class ItemsAndWeapon {
         int manaCost;
         String spellType;
     }
-
 }
