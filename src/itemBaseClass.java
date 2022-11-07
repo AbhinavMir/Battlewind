@@ -1,32 +1,51 @@
-public class ItemsAndWeapon {
+// import arraylist
 
-    class Item
-    {
+import java.util.ArrayList;
+
+public class itemBaseClass {
+
+    ArrayList<Potion> potions = new ArrayList<Potion>();
+    ArrayList<Weapon> weapons = new ArrayList<Weapon>();
+    ArrayList<Armor> armors = new ArrayList<Armor>();
+
+    enum HeroType {
+        WARRIOR, PALADIN, SORCERERS
+    }
+
+    class Item {
         String name;
-        int price;
-        int level;
+        int cost;
+
+        class itemData {
+        }
     }
 
-    class Weapon extends Item
-    {
-        int damage;
-        int hands;
+    class Weapon extends Item {
+        // Name/cost/level/damage/required hands
+        String name;
+
+        class weaponData extends itemData {
+            int level;
+            int damage;
+            int hands;
+        }
     }
 
-    class Armor extends Item
-    {
-        int damageReduction;
+    class Armor extends Item {
+        String name;
+
+        class armorData extends itemData {
+            int level;
+            int damage;
+        }
     }
 
-    class Potion extends Item
-    {
-        int effectAmount;
-    }
+    class Potion extends Item {
+        String name;
 
-    class Spell extends Item
-    {
-        int damage;
-        int manaCost;
-        String spellType;
+        class potionData extends itemData {
+            int level;
+            int damage;
+        }
     }
 }

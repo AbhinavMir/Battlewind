@@ -2,8 +2,20 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.HashMap;
+import java.util.logging.Logger;
 
-public class readWriteHandler {
+public class readHandler {
+    // logger
+    private static final Logger logger = Logger.getLogger(readHandler.class.getName());
+
+    /*
+    There are four types of files that can be read:
+    1. Moves, which are the moves that the player can make
+    2. Items, which are the items that the player can use
+    3. Monsters, which are the monsters that the player can fight
+    4. Heroes, which are the heroes that the player can play as
+     */
+
     public static String[] getAllFiles(String path) {
         String[] allDirs;
         File folder = new File(path);
@@ -32,21 +44,5 @@ public class readWriteHandler {
         }
 
         return dataDump;
-    }
-
-    public static HashMap<String, String> commaSep(String toConvert) {
-        toConvert = toConvert.replaceAll("\\s+", ", ");
-        System.out.println(toConvert);
-        HashMap<String, String> data = new HashMap<String, String>();
-        return data;
-    }
-
-    public static void main(String[] args) {
-        String[] allDirs = getAllFiles("gameUtils/");
-        // read first file from allDirs
-        System.out.println(allDirs[0]);
-        String dataDump = readThisFiles("gameUtils/", allDirs[0]);
-        HashMap<String, String> data = commaSep(dataDump);
-        System.out.println(data);
     }
 }
