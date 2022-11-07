@@ -37,13 +37,13 @@ public class Map {
 
     public String tileImage(tileType tile) {
         if (tile == tileType.COMMON) {
-            return "🟨";
+            return "C";
         } else if (tile == tileType.INACCESSIBLE) {
-            return "🟥";
+            return "X";
         } else if (tile == tileType.ACCESSIBLE) {
-            return "🟩";
+            return "A";
         } else if (tile == tileType.PLAYER) {
-            return "🐴";
+            return "P";
         }
 
         return "ERR";
