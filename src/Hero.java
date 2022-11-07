@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 public class Hero extends Characters
 {
     int mp;
@@ -5,7 +7,9 @@ public class Hero extends Characters
     int dexterity;
     int agility;
     int gold;
-    itemBaseClass.Item[] inventory;
+
+    HashMap<String, String> heroMap = new HashMap<String, String>();
+
     public Hero(String name, int level, int exp, int hp, int baseDamage)
     {
         super(name, level, exp, hp, baseDamage);

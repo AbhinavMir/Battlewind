@@ -1,53 +1,83 @@
+import java.util.Random;
+
 public class Map {
-    class Grid {
-        int x;
-        int y;
-        int type;
-        int[] items;
-        int[] monsters;
-        int[] npcs;
-        int[] heroes;
+
+    Tile[][] map;
+
+    public Map(int seed, int x, int y) {
+        map = new Tile[x][y];
+        populateMap(seed, x, y);
+        this.map[0][0].setType(tileType.PLAYER);
     }
 
-    Grid[][] map;
-    int width;
-    int height;
+    public static void main(String[] args) {
+        Random rand = new Random();
+        Map map = new Map(rand.nextInt(1000), 10, 10);
+//        map.map[0][0].setType(tileType.PALADIN);
+//        map.map[6][2].setType(tileType.WARRIOR);
+//        map.map[3][3].setType(tileType.SORCERER);
+        System.out.println(map.printMap());
+    }
 
-    public Map(int width, int height) {
-        this.width = width;
-        this.height = height;
-        map = new Grid[width][height];
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                map[i][j] = new Grid();
-                map[i][j].x = i;
-                map[i][j].y = j;
-                map[i][j].type = 0;
-                map[i][j].items = new int[0];
-                map[i][j].monsters = new int[0];
-                map[i][j].npcs = new int[0];
-                map[i][j].heroes = new int[0];
+    public static Boolean initiateBattle(Tile tile) {
+        return tile.type == tileType.COMMON;
+    }
+
+    public void populateMap(int seed, int x, int y) {
+        tileType[] tileTypes = {tileType.COMMON, tileType.INACCESSIBLE, tileType.ACCESSIBLE};
+        Random rand = new Random(seed);
+        Tile[][] map = this.map;
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                tileType type = tileTypes[rand.nextInt(tileTypes.length)];
+                map[i][j] = new Tile(type, i, j);
             }
         }
     }
 
-    public void setGrid(int x, int y, int type, int[] items, int[] monsters, int[] npcs, int[] heroes) {
-        map[x][y].type = type;
-        map[x][y].items = items;
-        map[x][y].monsters = monsters;
-        map[x][y].npcs = npcs;
-        map[x][y].heroes = heroes;
+    public String tileImage(tileType tile) {
+        if (tile == tileType.COMMON) {
+            return "🟨";
+        } else if (tile == tileType.INACCESSIBLE) {
+            return "🟥";
+        } else if (tile == tileType.ACCESSIBLE) {
+            return "🟩";
+        } else if (tile == tileType.PLAYER) {
+            return "🐴";
+        }
+
+        return "ERR";
     }
 
-    private void clearMap() {
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                map[i][j].type = 0;
-                map[i][j].items = new int[0];
-                map[i][j].monsters = new int[0];
-                map[i][j].npcs = new int[0];
-                map[i][j].heroes = new int[0];
+    public String printMap() {
+        String mapString = "";
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
+                mapString += tileImage(map[i][j].type);
             }
+            mapString += "\n";
+        }
+
+        return mapString;
+    }
+
+    enum tileType {
+        INACCESSIBLE, ACCESSIBLE, COMMON, PLAYER
+    }
+
+    class Tile {
+        tileType type;
+        int x;
+        int y;
+
+        public Tile(tileType type, int x, int y) {
+            this.type = type;
+            this.x = x;
+            this.y = y;
+        }
+
+        public void setType(tileType type) {
+            this.type = type;
         }
     }
 }

@@ -45,4 +45,38 @@ public class readHandler {
 
         return dataDump;
     }
+
+    public static String parseKeyData(String data) {
+        String tempData = "";
+        while (data.contains(" ")) {
+            tempData = data.substring(0, data.indexOf(" "));
+            break;
+        }
+
+        return tempData;
+    }
+
+    public static String removeKeysFromString(String keys, String data)
+    {
+        // remove keys string from data
+        data = data.replace(keys, "");
+        // remove first element
+        //data = data.substring(1);
+        return data;
+    }
+
+    public static void main(String[] args) {
+        String path = "gameUtils/";
+        String[] allFiles = getAllFiles(path);
+        String[] fileRead = new String[allFiles.length];
+
+        for (int i = 0; i < allFiles.length; i++) {
+            fileRead[i] = readThisFiles(path, allFiles[i]);
+            // System.out.println(fileRead[i]);
+        }
+
+        String someString = parseKeyData(fileRead[0]);
+        System.out.println(removeKeysFromString(someString, fileRead[0]));
+
+      }
 }
