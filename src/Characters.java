@@ -15,6 +15,10 @@ public class Characters {
         this.baseDamage = baseDamage;
     }
 
+    public Characters() {
+
+    }
+
     public String getName() {
         return name;
     }
