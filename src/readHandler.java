@@ -1,20 +1,26 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.HashMap;
 import java.util.logging.Logger;
 
 public class readHandler {
-    // logger
+
     private static final Logger logger = Logger.getLogger(readHandler.class.getName());
 
-    /*
-    There are four types of files that can be read:
-    1. Moves, which are the moves that the player can make
-    2. Items, which are the items that the player can use
-    3. Monsters, which are the monsters that the player can fight
-    4. Heroes, which are the heroes that the player can play as
-     */
+    String armory = "Name/cost/required level/damage reduction";
+    String monster = "Name/level/damage/defense/dodge chance";
+    String hero = "Name/mana/strength/agility/dexterity/starting money/starting experience";
+
+    ArrayList<Hero> listOfPaladins = new ArrayList<>();
+    ArrayList<Hero> listOfSorcerers = new ArrayList<>();
+    ArrayList<Hero> listOfWarriors = new ArrayList<>();
+    ArrayList<Monster> listOfMonsters = new ArrayList<>();
+    ArrayList<Spell> listOfSpells = new ArrayList<>();
+    ArrayList<itemBaseClass.Potion> listOfPotions = new ArrayList<>();
+    ArrayList<itemBaseClass.Weapon> listOfWeapons = new ArrayList<>();
+    ArrayList<itemBaseClass.Armor> listOfArmors = new ArrayList<>();
+
 
     public static String[] getAllFiles(String path) {
         String[] allDirs;
@@ -45,38 +51,4 @@ public class readHandler {
 
         return dataDump;
     }
-
-    public static String parseKeyData(String data) {
-        String tempData = "";
-        while (data.contains(" ")) {
-            tempData = data.substring(0, data.indexOf(" "));
-            break;
-        }
-
-        return tempData;
-    }
-
-    public static String removeKeysFromString(String keys, String data)
-    {
-        // remove keys string from data
-        data = data.replace(keys, "");
-        // remove first element
-        //data = data.substring(1);
-        return data;
-    }
-
-    public static void main(String[] args) {
-        String path = "gameUtils/";
-        String[] allFiles = getAllFiles(path);
-        String[] fileRead = new String[allFiles.length];
-
-        for (int i = 0; i < allFiles.length; i++) {
-            fileRead[i] = readThisFiles(path, allFiles[i]);
-            // System.out.println(fileRead[i]);
-        }
-
-        String someString = parseKeyData(fileRead[0]);
-        System.out.println(removeKeysFromString(someString, fileRead[0]));
-
-      }
 }

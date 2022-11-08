@@ -1,5 +1,6 @@
-public class Characters {
+import java.util.HashMap;
 
+public class Characters {
     String name;
     int level;
     int exp;
@@ -59,22 +60,14 @@ public class Characters {
         this.setHp(this.getLevel() * 100);
     }
 
-    interface characterHandler
+    class Spell
     {
-
-    }
-
-    class Move
-    {
-        /*
-        Name/cost/required level/damage/mana cost
-         */
         String name;
         int cost;
         int requiredLevel;
         int damage;
         int manaCost;
-        public Move(String name, int cost, int requiredLevel, int damage, int manaCost)
+        public Spell(String name, int cost, int requiredLevel, int damage, int manaCost)
         {
             this.name = name;
             this.cost = cost;
