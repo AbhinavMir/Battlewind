@@ -57,13 +57,11 @@ public class Main {
             int heroNum = scanner.nextInt();
             Characters.Hero chosenHeroObj = readHandler.getHero(chosenHero, heroNum);
             chosenHeroObj.printHero();
-            //gameData.heroes.add(readHandler.getHero(chosenHero, heroNum));
+            gameData.heroes.add(readHandler.getHero(chosenHero, heroNum));
         }
 
         System.out.println("Your team:");
-        for (Characters.Hero hero : gameData.heroes) {
-            hero.printHero();
-        }
-        System.out.println(map.printMap());
+        gameData.printAllHeroes();
+        map.run();
     }
 }

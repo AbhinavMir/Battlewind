@@ -3,6 +3,7 @@ import java.util.Scanner;
 import java.util.logging.*;
 
 public class Map {
+    Scanner scanner = new Scanner(System.in);
     PrettyPrint pp = new PrettyPrint();
     Logger logger = Logger.getLogger(Map.class.getName());
     Tile[][] map;
@@ -12,7 +13,7 @@ public class Map {
         populateMap(seed, x, y);
     }
 
-    public static void main(String[] args) {
+    public static void run() {
         PrettyPrint pp = new PrettyPrint();
         readHandler.init();
         Map map = new Map(1, 10, 10);
@@ -26,6 +27,10 @@ public class Map {
             System.out.println(map.printMap());
             // pp.clearScreen();
         }
+    }
+
+    public static void main(String[] args) {
+        run();
     }
 
     public void initializeMap() {
@@ -72,7 +77,7 @@ public class Map {
         Random rand = new Random();
         int randNum = rand.nextInt(100);
         if (tile.type == tileType.COMMON) {
-            return randNum % 2 == 0 && randNum > 30;
+            return randNum % 2 == 0;
         } else {
             return false;
         }
@@ -85,7 +90,7 @@ public class Map {
         if (move.equals("w")) {
             if (x_current == 0 || map[x_current - 1][y_current].type == tileType.INACCESSIBLE) {
                 System.out.println("You can't move there!");
-            } else {
+            } else if(map[x_current - 1][y_current].type == tileType.COMMON) {
                 if (promptBattle(map[x_current - 1][y_current])) {
                     System.out.println("You encountered a monster!");
                     Battle battle = new Battle(3);
@@ -94,6 +99,12 @@ public class Map {
                     map[x_current][y_current].isPlayer = false;
                     map[x_current - 1][y_current].isPlayer = true;
                 }
+            }
+            else if(map[x_current - 1][y_current].type == tileType.MARKET) {
+                System.out.println("Welcome to market!");
+                Characters.Player.getGold();
+                System.out.println("Would you like to buy, sell or leave?");
+                int userChoice = scanner.nextInt();
             }
         } else if (move.equals("a")) {
             if (y_current == 0 || map[x_current][y_current - 1].type == tileType.INACCESSIBLE) {

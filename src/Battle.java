@@ -57,21 +57,8 @@ public class Battle {
             PrettyPrint.healthBarPrinter(this.getMonsters().get(i).getCurrentHp(), this.getMonsters().get(i).getHp());
         }
 
-        while (true) {
-            System.out.println("What do you want to do?");
-            System.out.println("(1) Attack\n" + "(2) Use a Spell\n" + "(3) Change Equipment\n" + "(4) Use a Potion");
-            choice = scanner.nextInt();
-            if (choice == 1) {
-                attack();
-            } else if (choice == 2) {
-                useSpell();
-            } else if (choice == 3) {
-                changeEquipment();
-            } else if (choice == 4) {
-                usePotion();
-            } else {
-                System.out.println("Invalid choice!");
-            }
-        }
+        // print out your party
+        System.out.println("Your party:");
+        gameData.printAllHeroes();
     }
 }

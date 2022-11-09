@@ -185,7 +185,7 @@ public class readHandler {
             e.printStackTrace();
         }
 
-        String[] x = getAllFiles("gameUtils/"); // Usually I'd use this to map , but was a bit lazy
+        // String[] x = getAllFiles("gameUtils/"); // Usually I'd use this to map , but was a bit lazy
         String paladins = readThisFiles("gameUtils/", "Paladins");
         String sorcerers = readThisFiles("gameUtils/", "Sorcerers");
         String warriors = readThisFiles("gameUtils/", "Warriors");

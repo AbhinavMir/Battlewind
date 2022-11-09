@@ -6,15 +6,6 @@ public class Characters {
     int exp;
     int hp;
     int currentHp;
-
-    public int getCurrentHp() {
-        return currentHp;
-    }
-
-    public void setCurrentHp(int currentHp) {
-        this.currentHp = currentHp;
-    }
-
     int baseDamage;
 
     public Characters(String name, int level, int exp, int hp, int baseDamage) {
@@ -27,6 +18,14 @@ public class Characters {
 
     public Characters() {
 
+    }
+
+    public int getCurrentHp() {
+        return currentHp;
+    }
+
+    public void setCurrentHp(int currentHp) {
+        this.currentHp = currentHp;
     }
 
     public String getName() {
@@ -118,6 +117,40 @@ public class Characters {
 
     static class Player {
         ArrayList<Hero> group = new ArrayList<>();
+
+        public static String getGold() {
+            String totalGoldByHeroes = "";
+            int numHeroes = gameData.heroes.size();
+            for (int i = 0; i < numHeroes; i++) {
+                gameData.heroes.get(i).getGold();
+                totalGoldByHeroes += gameData.heroes.get(i).getName() + " has " + gameData.heroes.get(i).getGold() + " gold\n";
+            }
+            return totalGoldByHeroes;
+        }
+
+        public static String viewInventory(Characters.Hero hero) {
+            String inventory = "";
+
+            // get all potions
+            inventory += "Potions:\n";
+            for (int i = 0; i < hero.getPotions().size(); i++) {
+                inventory += hero.getPotions().get(i).name + "\n";
+            }
+
+            // get all weapons
+            inventory += "Weapons:\n";
+            for (int i = 0; i < hero.getWeapons().size(); i++) {
+                inventory += hero.getWeapons().get(i).name + "\n";
+            }
+
+            // get all armor
+            inventory += "Armor:\n";
+            for (int i = 0; i < hero.getArmors().size(); i++) {
+                inventory += hero.getArmors().get(i).name + "\n";
+            }
+
+            return inventory;
+        }
     }
 
     public static class Hero extends Characters {
@@ -149,10 +182,6 @@ public class Characters {
             this.agility = agility;
         }
 
-        public void payGold(int amount) {
-            this.setGold(this.getGold() - amount);
-        }
-
         public Hero() {
             super();
         }
@@ -168,8 +197,44 @@ public class Characters {
             this.agility = agility;
         }
 
+        public ArrayList<Spell> getSpells() {
+            return spells;
+        }
+
+        public void setSpells(ArrayList<Spell> spells) {
+            this.spells = spells;
+        }
+
+        public ArrayList<Potion> getPotions() {
+            return potions;
+        }
+
+        public void setPotions(ArrayList<Potion> potions) {
+            this.potions = potions;
+        }
+
+        public ArrayList<Weapon> getWeapons() {
+            return weapons;
+        }
+
+        public void setWeapons(ArrayList<Weapon> weapons) {
+            this.weapons = weapons;
+        }
+
+        public ArrayList<Armor> getArmors() {
+            return armors;
+        }
+
+        public void setArmors(ArrayList<Armor> armors) {
+            this.armors = armors;
+        }
+
+        public void payGold(int amount) {
+            this.setGold(this.getGold() - amount);
+        }
+
         public void printHero() {
-            System.out.println("Name: " + this.getName() + " Level: " + this.getLevel() + " Exp: " + this.getExp() + " HP: " + this.getHp() + " Base Damage: " + this.getBaseDamage());
+            System.out.println("Name: " + this.getName() + " Level: " + this.getLevel() + " Exp: " + this.getExp() + " HP: " + this.getHp() + " Base Damage: " + this.getBaseDamage() + " Mana: " + this.getMana() + " Strength: " + this.getStrength() + " Agility: " + this.getAgility() + " Dexterity: " + this.getDexterity() + " Gold: " + this.getGold());
         }
 
         public int getId() {

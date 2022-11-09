@@ -24,6 +24,7 @@ public class gameData {
         for (Characters.Hero hero : heroes)
         {
             System.out.println(hero.getName()+ " " + hero.getLevel() + " " + hero.getExp() + " " + hero.getHp() + " " + hero.getBaseDamage());
+            PrettyPrint.healthBarPrinter(hero.getCurrentHp(), hero.getHp());
         }
     }
 }
