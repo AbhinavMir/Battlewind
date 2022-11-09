@@ -19,16 +19,7 @@ public class Map {
         System.out.println(map.printMap());
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            for (int i = 0 ; i<map.mapBackup.length;i++)
-            {
-                for (int j = 0 ; j<map.mapBackup[i].length;j++)
-                {
-                    if(map.mapBackup[i][j].type == tileType.PLAYER)
-                    {
-                        System.out.println("Characters.Hero at " + i + " " + j);
-                    }
-                }
-            }
+            System.out.println("Hero is at " + map.getPlayerPosition()[0] + " " + map.getPlayerPosition()[1]);
             pp.clearScreen();
             String move = scanner.nextLine();
             map.movePlayerOnMap(move);
@@ -37,7 +28,7 @@ public class Map {
     }
 
     public void initializeMap() {
-        this.map[0][0].setType(tileType.PLAYER);
+        this.map[0][0].isPlayer = true;
     }
 
     public void populateMap(int seed, int x, int y) {
@@ -58,18 +49,22 @@ public class Map {
         }
     }
 
-    public String tileImage(tileType tile) {
-        if (tile == tileType.COMMON) {
-            return "" + PrettyPrint.GREEN_BACKGROUND + "   " + PrettyPrint.RESET + "";
-        } else if (tile == tileType.INACCESSIBLE) {
-            return "" + PrettyPrint.RED_BACKGROUND + "   " + PrettyPrint.RESET + "";
-        } else if (tile == tileType.MARKET) {
-            return "" + PrettyPrint.BLUE_BACKGROUND + "(M)" + PrettyPrint.RESET + "";
-        } else if (tile == tileType.PLAYER) {
-            return "" + PrettyPrint.YELLOW_BACKGROUND + "YOU" + PrettyPrint.RESET + "";
+    public String tileImage(Tile tile) {
+        tileType type = tile.type;
+        String toReturn = "";
+        if (type == tileType.COMMON) {
+            toReturn = "" + PrettyPrint.GREEN_BACKGROUND + "   " + PrettyPrint.RESET + "";
+        } else if (type == tileType.INACCESSIBLE) {
+            toReturn = "" + PrettyPrint.RED_BACKGROUND + "   " + PrettyPrint.RESET + "";
+        } else if (type == tileType.MARKET) {
+            toReturn = "" + PrettyPrint.BLUE_BACKGROUND + "(M)" + PrettyPrint.RESET + "";
         }
 
-        return "ERR";
+        if(tile.isPlayer) {
+            toReturn = "" + PrettyPrint.YELLOW_BACKGROUND + "YOU" + PrettyPrint.RESET + "";
+        }
+
+        return toReturn;
     }
 
     public void movePlayerOnMap(String move) {
@@ -80,54 +75,54 @@ public class Map {
             if (x_current == 0 || map[x_current - 1][y_current].type == tileType.INACCESSIBLE) {
                 System.out.println("You can't move there!");
             } else {
-                map[x_current][y_current].setType(mapBackup[x_current][y_current].type);
-                map[x_current - 1][y_current].setType(tileType.PLAYER);
+                map[x_current - 1][y_current].isPlayer = true;
+                map[x_current][y_current].isPlayer = false;
             }
         } else if (move.equals("a")) {
             if (y_current == 0 || map[x_current][y_current - 1].type == tileType.INACCESSIBLE) {
                 System.out.println("You can't move there!");
             } else {
-                map[x_current][y_current].setType(mapBackup[x_current][y_current].type);
-                map[x_current][y_current].setType(mapBackup[x_current][y_current].type);
-                map[x_current][y_current].setType(mapBackup[x_current][y_current].type);
-                map[x_current][y_current - 1].setType(tileType.PLAYER);
+                map[x_current][y_current - 1].isPlayer = true;
+                map[x_current][y_current].isPlayer = false;
             }
         } else if (move.equals("s")) {
             if (x_current == map.length - 1 || map[x_current + 1][y_current].type == tileType.INACCESSIBLE) {
                 System.out.println("You can't move there!");
             } else {
-                map[x_current][y_current].setType(mapBackup[x_current][y_current].type);
-                map[x_current + 1][y_current].setType(tileType.PLAYER);
+                map[x_current + 1][y_current].isPlayer = true;
+                map[x_current][y_current].isPlayer = false;
             }
         } else if (move.equals("d")) {
             if (y_current == map[0].length - 1 || map[x_current][y_current + 1].type == tileType.INACCESSIBLE) {
                 System.out.println("You can't move there!");
             } else {
-                map[x_current][y_current].setType(mapBackup[x_current][y_current].type);
-                map[x_current][y_current + 1].setType(tileType.PLAYER);
+                map[x_current][y_current + 1].isPlayer = true;
+                map[x_current][y_current].isPlayer = false;
             }
         }
     }
 
 
-    public int[] getPlayerPosition() {
-        int[] playerPosition = new int[2];
+    public int[] getPlayerPosition()
+    {
+        int[] position = new int[2];
         for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[i].length; j++) {
-                if (map[i][j].type == tileType.PLAYER) {
-                    playerPosition[0] = i;
-                    playerPosition[1] = j;
+            for (int j = 0; j < map[0].length; j++) {
+                if (map[i][j].isPlayer) {
+                    position[0] = i;
+                    position[1] = j;
+                    return position;
                 }
             }
         }
-        return playerPosition;
+        return position;
     }
 
     public String printMap() {
         String mapString = "";
         for (int i = 0; i < this.map.length; i++) {
             for (int j = 0; j < this.map[i].length; j++) {
-                mapString += tileImage(this.map[i][j].type);
+                mapString += tileImage(this.map[i][j]);
             }
             mapString += "\n";
         }
