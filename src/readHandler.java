@@ -13,8 +13,12 @@ public class readHandler {
     String armory = "Name/cost/required level/damage reduction";
     String monster = "Name/level/damage/defense/dodge chance";
     String hero = "Name/mana/strength/agility/dexterity/starting money/starting experience";
-    ArrayList<Characters.Monster> listOfMonsters = new ArrayList<>(); // monsters
-    ArrayList<Spell> listOfSpells = new ArrayList<>(); // spells
+    static ArrayList<Characters.Monster> listOfDragons = new ArrayList<>(); // monsters
+    static ArrayList<Characters.Monster> listOfSpirits = new ArrayList<>(); // monsters
+    static ArrayList<Characters.Monster> listOfExoskeletons = new ArrayList<>(); // monsters
+    ArrayList<Spell> listOfLightningSpells = new ArrayList<>(); // spells
+    ArrayList<Spell> listOfFireballSpells = new ArrayList<>(); // spells
+    ArrayList<Spell> listOfIceSpells = new ArrayList<>(); // spells
     ArrayList<itemBaseClass.Potion> listOfPotions = new ArrayList<>(); // potions
     ArrayList<itemBaseClass.Weapon> listOfWeapons = new ArrayList<>(); // weapons
     ArrayList<itemBaseClass.Armor> listOfArmors = new ArrayList<>();    // armors
@@ -38,10 +42,6 @@ public class readHandler {
             int dexterity = Integer.parseInt(heroDataArray[i * 7 + 4]);
             int startingMoney = Integer.parseInt(heroDataArray[i * 7 + 5]);
             int startingExp = Integer.parseInt(heroDataArray[i * 7 + 6]);
-            // String name, int mana, int strength, int agility,
-            // int dexterity, int startingMoney, int startingExperience, heroType type,
-            // int level, int exp, int hp, int baseDamage
-
             Characters.Hero hero = new Characters.Hero(name, mana, strength, agility, dexterity, startingMoney, startingExp, type);
 
             switch (type) {
@@ -56,6 +56,43 @@ public class readHandler {
                     break;
             }
         }
+    }
+
+    public static void readMonsters(String monsterData, Characters.Monster.monsterType type) {
+        String keys = "Name/level/damage/defense/dodge chance";
+        // remove Name/level/damage/defense/dodge chance from monsterData using replace
+        monsterData = monsterData.replace(keys, "");
+        // remove first element from monsterData using replace
+        monsterData = monsterData.replaceFirst(" ", "");
+        // turn it into an array, split by space. If multiple spaces, split by multiple spaces
+        String[] monsterDataArray = monsterData.split(" +");
+
+        int numNames = monsterDataArray.length / 5;
+
+        for (int i = 0; i < numNames; i++) {
+            // String name, int level, int damage, int exp, int hp, int baseDamage, int dodgeChance
+            String name = monsterDataArray[i * 5];
+            int level = Integer.parseInt(monsterDataArray[i * 5 + 1]);
+            int damage = Integer.parseInt(monsterDataArray[i * 5 + 2]);
+            int defense = Integer.parseInt(monsterDataArray[i * 5 + 3]);
+            int dodgeChance = Integer.parseInt(monsterDataArray[i * 5 + 4]);
+            int hp = level * 100;
+            int baseDamage = damage;
+            Characters.Monster monster = new Characters.Monster(name, level, damage, defense, dodgeChance, hp, baseDamage);
+            if(type == Characters.Monster.monsterType.DRAGON) {
+                listOfDragons.add(monster);
+            } else if(type == Characters.Monster.monsterType.EXOSKELETON) {
+                listOfExoskeletons.add(monster);
+            } else if(type == Characters.Monster.monsterType.SPIRIT) {
+                listOfSpirits.add(monster);
+            }
+            System.out.println(monster.name);
+        }
+    }
+
+    public static void readSpells(String spellData)
+    {
+
     }
 
     public static void printHeroes(Characters.Hero.heroType type) {
@@ -121,12 +158,34 @@ public class readHandler {
     }
 
     public static void init() {
-        String[] x = getAllFiles("gameUtils/");
+        System.out.println("Please wait...");
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        String[] x = getAllFiles("gameUtils/"); // Usually I'd use this to map , but was a bit lazy
         String paladins = readThisFiles("gameUtils/", "Paladins");
         String sorcerers = readThisFiles("gameUtils/", "Sorcerers");
         String warriors = readThisFiles("gameUtils/", "Warriors");
+        String spirits = readThisFiles("gameUtils/", "Spirits");
+        String exoskeletons = readThisFiles("gameUtils/", "Exoskeletons");
+        String dragons = readThisFiles("gameUtils/", "Dragons");
         readHeroes(paladins, Characters.Hero.heroType.PALADIN);
         readHeroes(sorcerers, Characters.Hero.heroType.SORCERER);
         readHeroes(warriors, Characters.Hero.heroType.WARRIOR);
+        readMonsters(spirits, Characters.Monster.monsterType.SPIRIT);
+        readMonsters(exoskeletons, Characters.Monster.monsterType.EXOSKELETON);
+        try{
+            readMonsters(dragons, Characters.Monster.monsterType.DRAGON);
+        }
+        catch (Exception e){
+            System.out.println("Corrupted file Dragons.txt, loading manually...");
+            ManualHandler.loadDragonsManually();
+        }
+    }
+
+    public static void main(String[] args) {
+        init();
     }
 }

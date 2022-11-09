@@ -80,15 +80,22 @@ public class Characters {
     }
 
     public static class Monster extends Characters {
+        enum monsterType {
+            DRAGON,
+            SPIRIT,
+            EXOSKELETON
 
-        String name;
-        int exp = 0;
+        }
+
+        // Name/level/damage/defense/dodge chance
         int damage;
         int defense;
         int dodgeChance;
 
-        public Monster(String name, int level, int exp, int hp, int baseDamage) {
+        public Monster(String name, int level, int damage, int exp, int hp, int baseDamage, int dodgeChance) {
             super(name, level, exp, hp, baseDamage);
+            this.damage = damage;
+            this.dodgeChance = dodgeChance;
         }
     }
 

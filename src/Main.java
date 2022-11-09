@@ -4,7 +4,7 @@ import java.util.logging.Logger;
 public class Main {
     static Logger logger = Logger.getLogger(Main.class.getName());
     public static void main(String[] args) {
-        readHandler.init();
+        // readHandler.init();
         Scanner scanner = new Scanner(System.in);
         System.out.println("  <=======]}======\n" +
                 "    --.   /|\n" +

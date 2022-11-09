@@ -60,11 +60,21 @@ public class Map {
             toReturn = "" + PrettyPrint.BLUE_BACKGROUND + "(M)" + PrettyPrint.RESET + "";
         }
 
-        if(tile.isPlayer) {
+        if (tile.isPlayer) {
             toReturn = "" + PrettyPrint.YELLOW_BACKGROUND + "YOU" + PrettyPrint.RESET + "";
         }
 
         return toReturn;
+    }
+
+    public Boolean promptBattle(Tile tile) {
+        Random rand = new Random();
+        int randNum = rand.nextInt(100);
+        if (tile.type == tileType.COMMON) {
+            return randNum % 2 == 0;
+        } else {
+            return false;
+        }
     }
 
     public void movePlayerOnMap(String move) {
@@ -103,8 +113,7 @@ public class Map {
     }
 
 
-    public int[] getPlayerPosition()
-    {
+    public int[] getPlayerPosition() {
         int[] position = new int[2];
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
