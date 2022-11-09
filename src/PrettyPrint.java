@@ -19,7 +19,6 @@ public class PrettyPrint {
     public static final String CYAN_BACKGROUND = "\u001B[46m";
 
     public void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        // System.out.print("\033\143");
     }
 }
