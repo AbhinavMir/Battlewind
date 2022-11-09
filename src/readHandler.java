@@ -6,40 +6,36 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class readHandler {
-
     private static final Logger logger = Logger.getLogger(readHandler.class.getName());
     static ArrayList<Characters.Hero> listOfPaladins = new ArrayList<>(); // heroes
     static ArrayList<Characters.Hero> listOfSorcerers = new ArrayList<>(); // heroes
     static ArrayList<Characters.Hero> listOfWarriors = new ArrayList<>(); // heroes
-    String armory = "Name/cost/required level/damage reduction";
-    String monster = "Name/level/damage/defense/dodge chance";
-    String hero = "Name/mana/strength/agility/dexterity/starting money/starting experience";
     static ArrayList<Characters.Monster> listOfDragons = new ArrayList<>(); // monsters
     static ArrayList<Characters.Monster> listOfSpirits = new ArrayList<>(); // monsters
     static ArrayList<Characters.Monster> listOfExoskeletons = new ArrayList<>(); // monsters
+    static ArrayList<Potion> listOfPotions = new ArrayList<>(); // potions
+    String armory = "Name/cost/required level/damage reduction";
+    String monster = "Name/level/damage/defense/dodge chance";
+    String hero = "Name/mana/strength/agility/dexterity/starting money/starting experience";
     ArrayList<Spell> listOfLightningSpells = new ArrayList<>(); // spells
     ArrayList<Spell> listOfFireballSpells = new ArrayList<>(); // spells
     ArrayList<Spell> listOfIceSpells = new ArrayList<>(); // spells
-    static ArrayList<itemBaseClass.Potion> listOfPotions = new ArrayList<>(); // potions
-    ArrayList<itemBaseClass.Weapon> listOfWeapons = new ArrayList<>(); // weapons
-    ArrayList<itemBaseClass.Armor> listOfArmors = new ArrayList<>();    // armors
+    ArrayList<Weapon> listOfWeapons = new ArrayList<>(); // weapons
+    ArrayList<Armor> listOfArmors = new ArrayList<>();    // armors
 
-    public static void readPotions(String potionData)
-    {
+    public static void readPotions(String potionData) {
         String keys = "Name/cost/required level/attribute increase/attribute affected";
         potionData = potionData.replace(keys, "");
         potionData = potionData.replaceFirst(" ", "");
         String[] potionDataArray = potionData.split(" +");
-        int potionNum = potionDataArray.length/5;
-        for (int i = 0; i < potionNum; i++)
-        {
-            String name = potionDataArray[i*5];
-            int cost = Integer.parseInt(potionDataArray[i*5+1]);
-            int requiredLevel = Integer.parseInt(potionDataArray[i*5+2]);
-            int attributeIncrease = Integer.parseInt(potionDataArray[i*5+3]);
-            String attributeAffected = potionDataArray[i*5+4];
-            itemBaseClass.Potion potion = new itemBaseClass.Potion(name, cost, requiredLevel, attributeIncrease, attributeAffected);
-            listOfPotions.add(potion);
+        int potionNum = potionDataArray.length / 5;
+        for (int i = 0; i < potionNum; i++) {
+            String name = potionDataArray[i * 5];
+            int cost = Integer.parseInt(potionDataArray[i * 5 + 1]);
+            int requiredLevel = Integer.parseInt(potionDataArray[i * 5 + 2]);
+            int attributeIncrease = Integer.parseInt(potionDataArray[i * 5 + 3]);
+            String attributeAffected = potionDataArray[i * 5 + 4];
+            Potion potion = new Potion(name, cost, requiredLevel, attributeIncrease, attributeAffected);
         }
     }
 
@@ -99,18 +95,17 @@ public class readHandler {
             int hp = level * 100;
             int baseDamage = damage;
             Characters.Monster monster = new Characters.Monster(name, level, damage, defense, dodgeChance, hp, baseDamage);
-            if(type == Characters.Monster.monsterType.DRAGON) {
+            if (type == Characters.Monster.monsterType.DRAGON) {
                 listOfDragons.add(monster);
-            } else if(type == Characters.Monster.monsterType.EXOSKELETON) {
+            } else if (type == Characters.Monster.monsterType.EXOSKELETON) {
                 listOfExoskeletons.add(monster);
-            } else if(type == Characters.Monster.monsterType.SPIRIT) {
+            } else if (type == Characters.Monster.monsterType.SPIRIT) {
                 listOfSpirits.add(monster);
             }
         }
     }
 
-    public static void readSpells(String spellData)
-    {
+    public static void readSpells(String spellData) {
 
     }
 
@@ -179,7 +174,7 @@ public class readHandler {
     public static void init() {
         System.out.println("Loading data, please wait...");
         try {
-            Thread.sleep(150);
+            Thread.sleep(50);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -200,11 +195,10 @@ public class readHandler {
         readMonsters(spirits, Characters.Monster.monsterType.SPIRIT);
         logger.info("Spirits loaded");
         readMonsters(exoskeletons, Characters.Monster.monsterType.EXOSKELETON);
-        try{
+        try {
             readMonsters(dragons, Characters.Monster.monsterType.DRAGON);
             logger.info("Dragons loaded");
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             logger.log(Level.WARNING, "Error reading dragons", e);
             ManualHandler.loadDragonsManually();
             logger.info("Dragons loaded manually");
@@ -213,6 +207,7 @@ public class readHandler {
     }
 
     public static void main(String[] args) {
+        logger.setLevel(Level.OFF);
         init();
     }
 }

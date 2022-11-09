@@ -71,7 +71,7 @@ public class Map {
         Random rand = new Random();
         int randNum = rand.nextInt(100);
         if (tile.type == tileType.COMMON) {
-            return randNum % 2 == 0;
+            return randNum % 2 == 0 && randNum > 30;
         } else {
             return false;
         }
@@ -85,29 +85,57 @@ public class Map {
             if (x_current == 0 || map[x_current - 1][y_current].type == tileType.INACCESSIBLE) {
                 System.out.println("You can't move there!");
             } else {
-                map[x_current - 1][y_current].isPlayer = true;
-                map[x_current][y_current].isPlayer = false;
+                if(promptBattle(map[x_current - 1][y_current])) {
+                    System.out.println("You encountered a monster!");
+                    Battle battle = new Battle();
+                    battle.startBattle();
+                }
+                else {
+                    map[x_current][y_current].isPlayer = false;
+                    map[x_current - 1][y_current].isPlayer = true;
+                }
             }
         } else if (move.equals("a")) {
             if (y_current == 0 || map[x_current][y_current - 1].type == tileType.INACCESSIBLE) {
                 System.out.println("You can't move there!");
             } else {
-                map[x_current][y_current - 1].isPlayer = true;
-                map[x_current][y_current].isPlayer = false;
+                if(promptBattle(map[x_current][y_current - 1])) {
+                    System.out.println("You encountered a monster!");
+                    Battle battle = new Battle();
+                    battle.startBattle();
+                }
+                else {
+                    map[x_current][y_current].isPlayer = false;
+                    map[x_current][y_current - 1].isPlayer = true;
+                }
             }
         } else if (move.equals("s")) {
             if (x_current == map.length - 1 || map[x_current + 1][y_current].type == tileType.INACCESSIBLE) {
                 System.out.println("You can't move there!");
             } else {
-                map[x_current + 1][y_current].isPlayer = true;
-                map[x_current][y_current].isPlayer = false;
+                if(promptBattle(map[x_current + 1][y_current])) {
+                    System.out.println("You encountered a monster!");
+                    Battle battle = new Battle();
+                    battle.startBattle();
+                }
+                else {
+                    map[x_current][y_current].isPlayer = false;
+                    map[x_current + 1][y_current].isPlayer = true;
+                }
             }
         } else if (move.equals("d")) {
             if (y_current == map[0].length - 1 || map[x_current][y_current + 1].type == tileType.INACCESSIBLE) {
                 System.out.println("You can't move there!");
             } else {
-                map[x_current][y_current + 1].isPlayer = true;
-                map[x_current][y_current].isPlayer = false;
+                if(promptBattle(map[x_current][y_current + 1])) {
+                    System.out.println("You encountered a monster!");
+                    Battle battle = new Battle();
+                    battle.startBattle();
+                }
+                else {
+                    map[x_current][y_current].isPlayer = false;
+                    map[x_current][y_current + 1].isPlayer = true;
+                }
             }
         }
     }
