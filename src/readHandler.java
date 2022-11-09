@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class readHandler {
@@ -19,9 +20,28 @@ public class readHandler {
     ArrayList<Spell> listOfLightningSpells = new ArrayList<>(); // spells
     ArrayList<Spell> listOfFireballSpells = new ArrayList<>(); // spells
     ArrayList<Spell> listOfIceSpells = new ArrayList<>(); // spells
-    ArrayList<itemBaseClass.Potion> listOfPotions = new ArrayList<>(); // potions
+    static ArrayList<itemBaseClass.Potion> listOfPotions = new ArrayList<>(); // potions
     ArrayList<itemBaseClass.Weapon> listOfWeapons = new ArrayList<>(); // weapons
     ArrayList<itemBaseClass.Armor> listOfArmors = new ArrayList<>();    // armors
+
+    public static void readPotions(String potionData)
+    {
+        String keys = "Name/cost/required level/attribute increase/attribute affected";
+        potionData = potionData.replace(keys, "");
+        potionData = potionData.replaceFirst(" ", "");
+        String[] potionDataArray = potionData.split(" +");
+        int potionNum = potionDataArray.length/5;
+        for (int i = 0; i < potionNum; i++)
+        {
+            String name = potionDataArray[i*5];
+            int cost = Integer.parseInt(potionDataArray[i*5+1]);
+            int requiredLevel = Integer.parseInt(potionDataArray[i*5+2]);
+            int attributeIncrease = Integer.parseInt(potionDataArray[i*5+3]);
+            String attributeAffected = potionDataArray[i*5+4];
+            itemBaseClass.Potion potion = new itemBaseClass.Potion(name, cost, requiredLevel, attributeIncrease, attributeAffected);
+            listOfPotions.add(potion);
+        }
+    }
 
     public static void readHeroes(String heroData, Characters.Hero.heroType type) {
         String keys = "Name/mana/strength/agility/dexterity/starting money/starting experience";
@@ -86,7 +106,6 @@ public class readHandler {
             } else if(type == Characters.Monster.monsterType.SPIRIT) {
                 listOfSpirits.add(monster);
             }
-            System.out.println(monster.name);
         }
     }
 
@@ -158,12 +177,13 @@ public class readHandler {
     }
 
     public static void init() {
-        System.out.println("Please wait...");
+        System.out.println("Loading data, please wait...");
         try {
-            Thread.sleep(200);
+            Thread.sleep(150);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         String[] x = getAllFiles("gameUtils/"); // Usually I'd use this to map , but was a bit lazy
         String paladins = readThisFiles("gameUtils/", "Paladins");
         String sorcerers = readThisFiles("gameUtils/", "Sorcerers");
@@ -172,17 +192,24 @@ public class readHandler {
         String exoskeletons = readThisFiles("gameUtils/", "Exoskeletons");
         String dragons = readThisFiles("gameUtils/", "Dragons");
         readHeroes(paladins, Characters.Hero.heroType.PALADIN);
+        logger.info("Paladins loaded");
         readHeroes(sorcerers, Characters.Hero.heroType.SORCERER);
+        logger.info("Sorcerers loaded");
         readHeroes(warriors, Characters.Hero.heroType.WARRIOR);
+        logger.info("Warriors loaded");
         readMonsters(spirits, Characters.Monster.monsterType.SPIRIT);
+        logger.info("Spirits loaded");
         readMonsters(exoskeletons, Characters.Monster.monsterType.EXOSKELETON);
         try{
             readMonsters(dragons, Characters.Monster.monsterType.DRAGON);
+            logger.info("Dragons loaded");
         }
         catch (Exception e){
-            System.out.println("Corrupted file Dragons.txt, loading manually...");
+            logger.log(Level.WARNING, "Error reading dragons", e);
             ManualHandler.loadDragonsManually();
+            logger.info("Dragons loaded manually");
         }
+
     }
 
     public static void main(String[] args) {
