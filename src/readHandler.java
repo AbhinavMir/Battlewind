@@ -29,25 +29,28 @@ public class readHandler {
         }
     }
 
-    public static void getAllWeapons() {
+    public static void printAllWeapons() {
         for (Weapon weapon : listOfWeapons) {
             System.out.println(weapon.name + PrettyPrint.BLUE + " costs " + weapon.cost + PrettyPrint.RESET + " / Required level: " + weapon.requiredLevel + " / Damage: " + weapon.damage);
         }
     }
 
-    public static void getAllArmors() {
+    public static void printAllArmors() {
         for (Armor armor : listOfArmors) {
             System.out.println(armor.name + PrettyPrint.BLUE + " costs " + armor.cost + PrettyPrint.RESET + " / Required level: " + armor.requiredLevel + " / Damage reduction: " + armor.damageReduction);
         }
     }
 
-    public static void getAllSpells() {
+    public static void printAllSpells() {
+        System.out.println("Lightning Spells:");
         for (Characters.Spell spell : listOfLightningSpells) {
             System.out.println(spell.name + PrettyPrint.BLUE + " costs " + spell.cost + PrettyPrint.RESET + " / Required level: " + spell.requiredLevel + " / Damage: " + spell.damage + " / Mana cost: " + spell.manaCost);
         }
+        System.out.println("Fireball Spells:");
         for (Characters.Spell spell : listOfFireballSpells) {
             System.out.println(spell.name + PrettyPrint.BLUE + " costs " + spell.cost + PrettyPrint.RESET + " / Required level: " + spell.requiredLevel + " / Damage: " + spell.damage + " / Mana cost: " + spell.manaCost);
         }
+        System.out.println("Ice Spells:");
         for (Characters.Spell spell : listOfIceSpells) {
             System.out.println(spell.name + PrettyPrint.BLUE + " costs " + spell.cost + PrettyPrint.RESET + " / Required level: " + spell.requiredLevel + " / Damage: " + spell.damage + " / Mana cost: " + spell.manaCost);
         }

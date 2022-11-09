@@ -3,6 +3,7 @@ import java.util.Scanner;
 import java.util.logging.*;
 
 public class Map {
+    String helpString = "";
     Scanner scanner = new Scanner(System.in);
     PrettyPrint pp = new PrettyPrint();
     Logger logger = Logger.getLogger(Map.class.getName());
@@ -77,7 +78,7 @@ public class Map {
         Random rand = new Random();
         int randNum = rand.nextInt(100);
         if (tile.type == tileType.COMMON) {
-            return randNum % 2 == 0;
+            return randNum % 2 == 0 && randNum > 50;
         } else {
             return false;
         }
@@ -100,7 +101,7 @@ public class Map {
                     map[x_current - 1][y_current].isPlayer = true;
                 }
             } else if (map[x_current - 1][y_current].type == tileType.MARKET) {
-                Market.prompt(scanner);
+                Market.prompt();
             }
         } else if (move.equals("a")) {
             if (y_current == 0 || map[x_current][y_current - 1].type == tileType.INACCESSIBLE) {
@@ -115,7 +116,7 @@ public class Map {
                     map[x_current][y_current - 1].isPlayer = true;
                 }
             } else if (map[x_current][y_current - 1].type == tileType.MARKET) {
-                Market.prompt(scanner);
+                Market.prompt();
             }
         } else if (move.equals("s")) {
             if (x_current == map.length - 1 || map[x_current + 1][y_current].type == tileType.INACCESSIBLE) {
@@ -130,7 +131,7 @@ public class Map {
                     map[x_current + 1][y_current].isPlayer = true;
                 }
             } else if (map[x_current + 1][y_current].type == tileType.MARKET) {
-                Market.prompt(scanner);
+                Market.prompt();
             }
         } else if (move.equals("d")) {
             if (y_current == map[0].length - 1 || map[x_current][y_current + 1].type == tileType.INACCESSIBLE) {
@@ -144,9 +145,50 @@ public class Map {
                     map[x_current][y_current].isPlayer = false;
                     map[x_current][y_current + 1].isPlayer = true;
                 } else if (map[x_current][y_current + 1].type == tileType.MARKET) {
-                    Market.prompt(scanner);
+                    Market.prompt();
                 }
             }
+        }
+        else if(move.equals("i"))
+        {
+            int whichHero = scanner.nextInt();
+            gameData.printAllHeroes();
+            System.out.println("0: Print entire inventory of party");
+            if(whichHero!=0){Characters.Player.viewInventory(gameData.heroes.get(whichHero));}
+            else if(whichHero==0)
+            {
+                for (int i = 0; i < gameData.heroes.size(); i++) {
+                    Characters.Player.viewInventory(gameData.heroes.get(i));
+                }
+            }
+            else {
+                System.out.println("Invalid input");
+            }
+        }
+        else if (move.equals("p"))
+        {
+            gameData.printAllHeroes();
+        }
+        else if (move.equals("q"))
+        {
+            System.out.println("Are you sure? You'll lose all progress!");
+            String sure = scanner.next();
+            if(sure.equals("y"))
+            {
+                System.exit(0);
+            }
+        }
+        else if(move.equals("m"))
+        {
+            printMap();
+        }
+        else if(move.equals("h"))
+        {
+            System.out.println(helpString);
+        }
+        else
+        {
+            System.out.println("Invalid input");
         }
     }
 

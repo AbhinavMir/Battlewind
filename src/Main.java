@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +30,9 @@ public class Main {
         int size = scanner.nextInt();
         System.out.println("How many heroes?");
         int heroes = scanner.nextInt();
-        Map map = new Map(heroes, size, size);
+        Random rand = new Random();
+        int randomSeed = rand.nextInt(1000);
+        Map map = new Map(randomSeed, size, size);
 
         for (int i = 0;i<heroes;i++)
         {

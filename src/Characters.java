@@ -166,6 +166,8 @@ public class Characters {
         int x;
         int y;
         heroType type;
+
+
         ArrayList<Spell> spells = new ArrayList<>();
         ArrayList<Potion> potions = new ArrayList<>();
         ArrayList<Weapon> weapons = new ArrayList<>();

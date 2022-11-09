@@ -18,25 +18,45 @@ public class Market {
         iceSpellsOnSale = readHandler.getListOfIceSpells();
     }
 
-    public static void prompt(Scanner scanner) {
+    public static void prompt() {
+        while (true) {
+            try {
+                Scanner scanner = new Scanner(System.in);
+                prePrompt(scanner);
+                scanner.close();
+                break;
+            } catch (Exception e) {
+                System.out.println("Invalid input, let's try again");
+            }
+        }
+    }
+
+    public static void prePrompt(Scanner scanner) {
         System.out.println("Welcome to market!");
         Characters.Player.getGold();
         System.out.println("Would you like to (1) buy, (2) sell or (3) leave?");
-        int userChoice = scanner.nextInt();
+        // userChoice with scanner but make sure correct input
+        int userChoice = 0;
+        userChoice = scanner.nextInt();
         Characters.Hero thisHero = new Characters.Hero();
-        System.out.println("For which hero?");
-        int heroChoice = scanner.nextInt();
-        thisHero = gameData.getHero(heroChoice);
+
         if (userChoice == 1) {
+            System.out.println("BUYING");
+            System.out.println("For which hero?");
+            gameData.printAllHeroes();
+            int heroChoice = 0;
+            heroChoice = scanner.nextInt();
+            thisHero = gameData.getHero(heroChoice);
             System.out.println("What would you like to buy?");
             System.out.println("1. Potion");
             System.out.println("2. Weapon");
             System.out.println("3. Armor");
             System.out.println("4. Spell");
-            int userChoice2 = scanner.nextInt();
+            int userChoice2 = 0;
+            userChoice2 = scanner.nextInt();
             if (userChoice2 == 1) {
-                readHandler.getListOfPotions();
                 System.out.println("Which potion would you like to buy?");
+                readHandler.printAllPotions();
                 int userChoice3 = scanner.nextInt();
                 Potion potion = readHandler.getListOfPotions().get(userChoice3);
                 if (thisHero.getGold() >= potion.cost) {
@@ -46,10 +66,10 @@ public class Market {
                 } else {
                     System.out.println("You don't have enough gold!");
                 }
-            } else if (userChoice2 == 2) {
-                readHandler.getListOfWeapons();
+            } else if (userChoice == 2) {
+                readHandler.printAllWeapons();
                 System.out.println("Which weapon would you like to buy?");
-                int userChoice3 = scanner.nextInt();
+                int userChoice3 = 0;
                 Weapon weapon = readHandler.getListOfWeapons().get(userChoice3);
                 if (thisHero.getGold() >= weapon.cost) {
                     thisHero.getWeapons().add(weapon);
@@ -58,8 +78,8 @@ public class Market {
                 } else {
                     System.out.println("You don't have enough gold!");
                 }
-            } else if (userChoice2 == 3) {
-                readHandler.getListOfArmors();
+            } else if (userChoice == 3) {
+                readHandler.printAllArmors();
                 System.out.println("Which armor would you like to buy?");
                 int userChoice3 = scanner.nextInt();
                 Armor armor = readHandler.getListOfArmors().get(userChoice3);
@@ -70,12 +90,13 @@ public class Market {
                 } else {
                     System.out.println("You don't have enough gold!");
                 }
-            } else if (userChoice2 == 4) {
+            } else if (userChoice == 4) {
                 // check if hero is a sorcerer or paladin
                 if (thisHero.type == Characters.Hero.heroType.SORCERER || thisHero.type == Characters.Hero.heroType.PALADIN) {
                     ArrayList<Characters.Spell> lightningSpells = readHandler.getListOfLightningSpells();
                     ArrayList<Characters.Spell> fireSpells = readHandler.getListOfFireballSpells();
                     ArrayList<Characters.Spell> iceSpells = readHandler.getListOfIceSpells();
+                    readHandler.printAllSpells();
                     System.out.println("Which type of spell would you like to buy?");
                     System.out.println("1. Lightning" + " " + "2. Fire" + " " + "3. Ice");
                     int userChoice3 = scanner.nextInt();
@@ -125,45 +146,50 @@ public class Market {
                 } else {
                     System.out.println("You can't buy spells!");
                 }
-            } else if (userChoice == 2) {
-                System.out.println("What would you like to sell?");
-                System.out.println("1. Potion");
-                System.out.println("2. Weapon");
-                System.out.println("3. Armor");
-                System.out.println("4. Spell");
-                userChoice2 = scanner.nextInt();
-                if (userChoice2 == 1) {
-                    System.out.println("Which potion would you like to sell?");
-                    for (int i = 0; i < thisHero.getPotions().size(); i++) {
-                        System.out.println(i + ". " + thisHero.getPotions().get(i).name + " " + thisHero.getPotions().get(i).cost);
-                    }
-                    int userChoice3 = scanner.nextInt();
-                    Potion potion = thisHero.getPotions().get(userChoice3);
-                    thisHero.getPotions().remove(potion);
-                    thisHero.gold += potion.cost;
-                    System.out.println("You sold a " + potion.name + " for " + potion.cost + " gold.");
-                } else if (userChoice2 == 2) {
-                    System.out.println("Which weapon would you like to sell?");
-                    for (int i = 0; i < thisHero.getWeapons().size(); i++) {
-                        System.out.println(i + ". " + thisHero.getWeapons().get(i).name + " " + thisHero.getWeapons().get(i).cost);
-                    }
-                    int userChoice3 = scanner.nextInt();
-                    Weapon weapon = thisHero.getWeapons().get(userChoice3);
-                    thisHero.getWeapons().remove(weapon);
-                    thisHero.gold += weapon.cost;
-                    System.out.println("You sold a " + weapon.name + " for " + weapon.cost + " gold.");
-                } else if (userChoice2 == 3) {
-                    System.out.println("Which armor would you like to sell?");
-                    for (int i = 0; i < thisHero.getArmors().size(); i++) {
-                        System.out.println(i + ". " + thisHero.getArmors().get(i).name + " " + thisHero.getArmors().get(i).cost);
-                    }
-                    int userChoice3 = scanner.nextInt();
-                    Armor armor = thisHero.getArmors().get(userChoice3);
-                    thisHero.getArmors().remove(armor);
-                    thisHero.gold += armor.cost;
-                    System.out.println("You sold a " + armor.name + " for " + armor.cost);
+            }
+        } else if (userChoice == 2) {
+            System.out.println("What would you like to sell?");
+            System.out.println("1. Potion");
+            System.out.println("2. Weapon");
+            System.out.println("3. Armor");
+            System.out.println("4. Spell");
+            int userChoice2 = scanner.nextInt();
+            if (userChoice2 == 1) {
+                System.out.println("Which potion would you like to sell?");
+                for (int i = 0; i < thisHero.getPotions().size(); i++) {
+                    System.out.println(i + ". " + thisHero.getPotions().get(i).name + " " + thisHero.getPotions().get(i).cost);
                 }
+                int userChoice3 = scanner.nextInt();
+                Potion potion = thisHero.getPotions().get(userChoice3);
+                thisHero.getPotions().remove(potion);
+                thisHero.gold += potion.cost;
+                System.out.println("You sold a " + potion.name + " for " + potion.cost + " gold.");
+            } else if (userChoice2 == 2) {
+                System.out.println("Which weapon would you like to sell?");
+                for (int i = 0; i < thisHero.getWeapons().size(); i++) {
+                    System.out.println(i + ". " + thisHero.getWeapons().get(i).name + " " + thisHero.getWeapons().get(i).cost);
+                }
+                int userChoice3 = scanner.nextInt();
+                Weapon weapon = thisHero.getWeapons().get(userChoice3);
+                thisHero.getWeapons().remove(weapon);
+                thisHero.gold += weapon.cost;
+                System.out.println("You sold a " + weapon.name + " for " + weapon.cost + " gold.");
+            } else if (userChoice2 == 3) {
+                System.out.println("Which armor would you like to sell?");
+                for (int i = 0; i < thisHero.getArmors().size(); i++) {
+                    System.out.println(i + ". " + thisHero.getArmors().get(i).name + " " + thisHero.getArmors().get(i).cost);
+                }
+                int userChoice3 = scanner.nextInt();
+                Armor armor = thisHero.getArmors().get(userChoice3);
+                thisHero.getArmors().remove(armor);
+                thisHero.gold += armor.cost;
+                System.out.println("You sold a " + armor.name + " for " + armor.cost);
             }
         }
     }
+
+    public static void main(String[] args) {
+        prompt();
+    }
 }
+
