@@ -105,7 +105,7 @@ public class Map {
         } else if (move.equals("a")) {
             if (y_current == 0 || map[x_current][y_current - 1].type == tileType.INACCESSIBLE) {
                 System.out.println("You can't move there!");
-            } else {
+            } else if (map[x_current][y_current - 1].type == tileType.COMMON) {
                 if (promptBattle(map[x_current][y_current - 1])) {
                     System.out.println("You encountered a monster!");
                     Battle battle = new Battle(3);
@@ -114,11 +114,13 @@ public class Map {
                     map[x_current][y_current].isPlayer = false;
                     map[x_current][y_current - 1].isPlayer = true;
                 }
+            } else if (map[x_current][y_current - 1].type == tileType.MARKET) {
+                Market.prompt(scanner);
             }
         } else if (move.equals("s")) {
             if (x_current == map.length - 1 || map[x_current + 1][y_current].type == tileType.INACCESSIBLE) {
                 System.out.println("You can't move there!");
-            } else {
+            } else if (map[x_current + 1][y_current].type == tileType.COMMON) {
                 if (promptBattle(map[x_current + 1][y_current])) {
                     System.out.println("You encountered a monster!");
                     Battle battle = new Battle(3);
@@ -127,6 +129,8 @@ public class Map {
                     map[x_current][y_current].isPlayer = false;
                     map[x_current + 1][y_current].isPlayer = true;
                 }
+            } else if (map[x_current + 1][y_current].type == tileType.MARKET) {
+                Market.prompt(scanner);
             }
         } else if (move.equals("d")) {
             if (y_current == map[0].length - 1 || map[x_current][y_current + 1].type == tileType.INACCESSIBLE) {
@@ -136,9 +140,11 @@ public class Map {
                     System.out.println("You encountered a monster!");
                     Battle battle = new Battle(3);
                     battle.startBattle();
-                } else {
+                } else if (map[x_current][y_current + 1].type == tileType.COMMON) {
                     map[x_current][y_current].isPlayer = false;
                     map[x_current][y_current + 1].isPlayer = true;
+                } else if (map[x_current][y_current + 1].type == tileType.MARKET) {
+                    Market.prompt(scanner);
                 }
             }
         }

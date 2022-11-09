@@ -125,9 +125,7 @@ public class Market {
                 } else {
                     System.out.println("You can't buy spells!");
                 }
-            }
-
-            else if(userChoice == 2) {
+            } else if (userChoice == 2) {
                 System.out.println("What would you like to sell?");
                 System.out.println("1. Potion");
                 System.out.println("2. Weapon");
@@ -163,7 +161,9 @@ public class Market {
                     Armor armor = thisHero.getArmors().get(userChoice3);
                     thisHero.getArmors().remove(armor);
                     thisHero.gold += armor.cost;
-                    System.out.println("You sold a " + armor.name + " for " + armor.cost + "
+                    System.out.println("You sold a " + armor.name + " for " + armor.cost);
+                }
+            }
         }
     }
 }
