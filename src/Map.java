@@ -3,46 +3,46 @@ import java.util.Scanner;
 import java.util.logging.*;
 
 public class Map {
+    static Tile[][] backupMap;
     Logger logger = Logger.getLogger(Map.class.getName());
-    // turn off logger
-    // logger.setLevel(Level.OFF);
     Tile[][] map;
-    // duplicate of map
-    Tile[][] backupMap;
 
     public Map(int seed, int x, int y) {
         map = new Tile[x][y];
         populateMap(seed, x, y);
-        this.map[0][0].setType(tileType.PLAYER);
     }
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        Random rand = new Random();
-        Map map = new Map(rand.nextInt(1000), 10, 10);
+        Map map = new Map(1, 10, 10);
+        map.initializeMap();
         System.out.println(map.printMap());
-        while (true) {
-            String move = scanner.nextLine();
-            //map.movePlayer(hero, move);
-            System.out.println(map.printMap());
-        }
+        // print out backup map
+        System.out.println("Backup map:");
+        System.out.println(map.printBackupMap());
     }
 
-    public static Boolean initiateBattle(Tile tile) {
-        return tile.type == tileType.COMMON;
+    public void initializeMap() {
+        this.map[0][0].setType(tileType.PLAYER);
     }
 
     public void populateMap(int seed, int x, int y) {
-        tileType[] tileTypes = {tileType.COMMON, tileType.INACCESSIBLE, tileType.ACCESSIBLE};
+        tileType[] tileTypes = {tileType.COMMON, tileType.INACCESSIBLE, tileType.MARKET};
         Random rand = new Random(seed);
-        Tile[][] map = this.map;
+        // randomly make a new map with 20% inaccessible spaces, 30% market spaces, and 50% common spaces
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
-                tileType type = tileTypes[rand.nextInt(tileTypes.length)];
-                map[i][j] = new Tile(type, i, j);
+                int randNum = rand.nextInt(100);
+                if (randNum < 20) {
+                    map[i][j] = new Tile(tileTypes[1], i, j);
+                } else if (randNum < 50) {
+                    map[i][j] = new Tile(tileTypes[2], i, j);
+                } else {
+                    map[i][j] = new Tile(tileTypes[0], i, j);
+                }
             }
         }
-        this.backupMap = map;
+
+        backupMap = map;
     }
 
     public String tileImage(tileType tile) {
@@ -50,8 +50,8 @@ public class Map {
             return " (C) ";
         } else if (tile == tileType.INACCESSIBLE) {
             return " (X) ";
-        } else if (tile == tileType.ACCESSIBLE) {
-            return " (A) ";
+        } else if (tile == tileType.MARKET) {
+            return " (M) ";
         } else if (tile == tileType.PLAYER) {
             return " YOU ";
         }
@@ -73,28 +73,28 @@ public class Map {
             if (move.equals("w")) {
                 if (y_current - 1 >= 0) {
                     // update map
-                    this.map[x_current][y_current].setType(this.backupMap[x_current][y_current].type);
+                    this.map[x_current][y_current].setType(backupMap[x_current][y_current].type);
                     hero.y = y_current - 1;
                     this.map[hero.x][hero.y].setType(tileType.PLAYER);
                 }
             } else if (move.equals("a")) {
                 if (x_current - 1 >= 0) {
                     // update map
-                    this.map[x_current][y_current].setType(this.backupMap[x_current][y_current].type);
+                    this.map[x_current][y_current].setType(backupMap[x_current][y_current].type);
                     hero.x = x_current - 1;
                     this.map[hero.x][hero.y].setType(tileType.PLAYER);
                 }
             } else if (move.equals("s")) {
                 if (y_current + 1 < this.map[0].length) {
                     // update map
-                    this.map[x_current][y_current].setType(this.backupMap[x_current][y_current].type);
+                    this.map[x_current][y_current].setType(backupMap[x_current][y_current].type);
                     hero.y = y_current + 1;
                     this.map[hero.x][hero.y].setType(tileType.PLAYER);
                 }
             } else if (move.equals("d")) {
                 if (x_current + 1 < this.map.length) {
                     // update map
-                    this.map[x_current][y_current].setType(this.backupMap[x_current][y_current].type);
+                    this.map[x_current][y_current].setType(backupMap[x_current][y_current].type);
                     hero.x = x_current + 1;
                     this.map[hero.x][hero.y].setType(tileType.PLAYER);
                 }
@@ -122,8 +122,21 @@ public class Map {
         return mapString;
     }
 
+    public String printBackupMap() {
+        String mapString = "";
+        backupMap[0][0].setType(tileType.COMMON);
+        for (int i = 0; i < backupMap.length; i++) {
+            for (int j = 0; j < backupMap[i].length; j++) {
+                mapString += tileImage(backupMap[i][j].type);
+            }
+            mapString += "\n";
+        }
+
+        return mapString;
+    }
+
     enum tileType {
-        INACCESSIBLE, ACCESSIBLE, COMMON, PLAYER
+        INACCESSIBLE, MARKET, COMMON, PLAYER
     }
 
     class Tile {

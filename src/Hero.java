@@ -13,12 +13,35 @@ public class Hero extends Characters {
     int x;
     int y;
     heroType type;
-    public Hero(String name, int level, int exp, int hp, int baseDamage) {
-        super(name, level, exp, hp, baseDamage);
+
+    public Hero(
+            String name, int mana, int strength, int agility,
+            int dexterity, int startingMoney, int startingExperience,
+            heroType type, int hp, int baseDamage
+    ) {
+        super(name, 0, startingExperience, hp, baseDamage);
+        this.mana = mana;
+        this.type = type;
+        this.startingMoney = startingMoney;
+        this.startingExperience = startingExperience;
+        this.strength = strength;
+        this.dexterity = dexterity;
+        this.agility = agility;
     }
 
     public Hero() {
         super();
+    }
+
+    public Hero(String name, int mana, int strength, int agility, int dexterity, int startingMoney, int startingExp, heroType type) {
+        super(name, 0, startingExp, 0, 0);
+        this.mana = mana;
+        this.type = type;
+        this.startingMoney = startingMoney;
+        this.startingExperience = startingExp;
+        this.strength = strength;
+        this.dexterity = dexterity;
+        this.agility = agility;
     }
 
     public void printHero() {

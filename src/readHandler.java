@@ -7,22 +7,19 @@ import java.util.logging.Logger;
 public class readHandler {
 
     private static final Logger logger = Logger.getLogger(readHandler.class.getName());
-
-    String armory = "Name/cost/required level/damage reduction";
-    String monster = "Name/level/damage/defense/dodge chance";
-    String hero = "Name/mana/strength/agility/dexterity/starting money/starting experience";
-
     static ArrayList<Hero> listOfPaladins = new ArrayList<>(); // heroes
     static ArrayList<Hero> listOfSorcerers = new ArrayList<>(); // heroes
     static ArrayList<Hero> listOfWarriors = new ArrayList<>(); // heroes
+    String armory = "Name/cost/required level/damage reduction";
+    String monster = "Name/level/damage/defense/dodge chance";
+    String hero = "Name/mana/strength/agility/dexterity/starting money/starting experience";
     ArrayList<Monster> listOfMonsters = new ArrayList<>(); // monsters
     ArrayList<Spell> listOfSpells = new ArrayList<>(); // spells
     ArrayList<itemBaseClass.Potion> listOfPotions = new ArrayList<>(); // potions
     ArrayList<itemBaseClass.Weapon> listOfWeapons = new ArrayList<>(); // weapons
     ArrayList<itemBaseClass.Armor> listOfArmors = new ArrayList<>();    // armors
 
-    public static void readHeroes(String heroData, Hero.heroType type)
-    {
+    public static void readHeroes(String heroData, Hero.heroType type) {
         String keys = "Name/mana/strength/agility/dexterity/starting money/starting experience";
         // remove Name/mana/strength/agility/dexterity/starting money/starting experience from heroData using replace
         heroData = heroData.replace(keys, "");
@@ -33,20 +30,21 @@ public class readHandler {
 
         int numNames = heroDataArray.length / 7;
 
-        for (int i = 0; i < numNames; i++)
-        {
-            Hero hero = new Hero();
-            hero.setName(heroDataArray[i * 7]);
-            hero.setMana(Integer.parseInt(heroDataArray[i * 7 + 1]));
-            hero.setStrength(Integer.parseInt(heroDataArray[i * 7 + 2]));
-            hero.setAgility(Integer.parseInt(heroDataArray[i * 7 + 3]));
-            hero.setDexterity(Integer.parseInt(heroDataArray[i * 7 + 4]));
-            hero.setStartingMoney(Integer.parseInt(heroDataArray[i * 7 + 5]));
-            hero.setStartingExperience(Integer.parseInt(heroDataArray[i * 7 + 6]));
-            hero.setType(type);
+        for (int i = 0; i < numNames; i++) {
+            String name = heroDataArray[i * 7];
+            int mana = Integer.parseInt(heroDataArray[i * 7 + 1]);
+            int strength = Integer.parseInt(heroDataArray[i * 7 + 2]);
+            int agility = Integer.parseInt(heroDataArray[i * 7 + 3]);
+            int dexterity = Integer.parseInt(heroDataArray[i * 7 + 4]);
+            int startingMoney = Integer.parseInt(heroDataArray[i * 7 + 5]);
+            int startingExp = Integer.parseInt(heroDataArray[i * 7 + 6]);
+            // String name, int mana, int strength, int agility,
+            // int dexterity, int startingMoney, int startingExperience, heroType type,
+            // int level, int exp, int hp, int baseDamage
 
-            switch (type)
-            {
+            Hero hero = new Hero(name, mana, strength, agility, dexterity, startingMoney, startingExp, type);
+
+            switch (type) {
                 case PALADIN:
                     listOfPaladins.add(hero);
                     break;
@@ -60,45 +58,32 @@ public class readHandler {
         }
     }
 
-    public static void printHeroes(Hero.heroType type)
-    {
-       if (type == Hero.heroType.PALADIN)
-       {
-           for (Hero hero : listOfPaladins)
-           {
-               System.out.println(hero.getName()+ " | " + hero.getMana() + " | " + hero.getStrength() + " | " + hero.getAgility() + " | " + hero.getDexterity() + " | " + hero.getStartingMoney() + " | " + hero.getStartingExperience());
-           }
-       }
-       else if (type == Hero.heroType.SORCERER)
-       {
-           for (Hero hero : listOfSorcerers)
-           {
-               System.out.println(hero.getName() + " | " + hero.getMana() + " | " + hero.getStrength() + " | " + hero.getAgility() + " | " + hero.getDexterity() + " | " + hero.getStartingMoney() + " | " + hero.getStartingExperience());
-           }
-       }
-       else if (type == Hero.heroType.WARRIOR)
-       {
-           for (Hero hero : listOfWarriors)
-           {
-               System.out.println(hero.getName() + " | " + hero.getMana() + " | " + hero.getStrength() + " | " + hero.getAgility() + " | " + hero.getDexterity() + " | " + hero.getStartingMoney() + " | " + hero.getStartingExperience());
-           }
-       }
+    public static void printHeroes(Hero.heroType type) {
+        // print keys
+        System.out.println("Name | mana | strength | agility | dexterity | starting money | starting experience");
+        if (type == Hero.heroType.PALADIN) {
+            for (Hero hero : listOfPaladins) {
+                System.out.println(hero.getName() + " | " + hero.getMana() + " | " + hero.getStrength() + " | " + hero.getAgility() + " | " + hero.getDexterity() + " | " + hero.getStartingMoney() + " | " + hero.getStartingExperience());
+            }
+        } else if (type == Hero.heroType.SORCERER) {
+            for (Hero hero : listOfSorcerers) {
+                System.out.println(hero.getName() + " | " + hero.getMana() + " | " + hero.getStrength() + " | " + hero.getAgility() + " | " + hero.getDexterity() + " | " + hero.getStartingMoney() + " | " + hero.getStartingExperience());
+            }
+        } else if (type == Hero.heroType.WARRIOR) {
+            for (Hero hero : listOfWarriors) {
+                System.out.println(hero.getName() + " | " + hero.getMana() + " | " + hero.getStrength() + " | " + hero.getAgility() + " | " + hero.getDexterity() + " | " + hero.getStartingMoney() + " | " + hero.getStartingExperience());
+            }
+        }
     }
 
-    public static Hero getHero(String chosenHero, int index)
-    {
+    public static Hero getHero(String chosenHero, int index) {
         // string to enum
         Hero.heroType type = Hero.heroType.valueOf(chosenHero.toUpperCase());
-        if(type == Hero.heroType.PALADIN)
-        {
+        if (type == Hero.heroType.PALADIN) {
             return listOfPaladins.get(index);
-        }
-        else if(type == Hero.heroType.SORCERER)
-        {
+        } else if (type == Hero.heroType.SORCERER) {
             return listOfSorcerers.get(index);
-        }
-        else if(type == Hero.heroType.WARRIOR)
-        {
+        } else if (type == Hero.heroType.WARRIOR) {
             return listOfWarriors.get(index);
         }
 
@@ -117,6 +102,7 @@ public class readHandler {
         }
         return allDirs;
     }
+
     public static String readThisFiles(String path, String fileName) {
         String dataDump = "";
         try {

@@ -22,7 +22,7 @@ public class gameData {
     {
         for (Hero hero : heroes)
         {
-            hero.printHero();
+            System.out.println(hero.getName()+ " " + hero.getLevel() + " " + hero.getExp() + " " + hero.getHp() + " " + hero.getBaseDamage());
         }
     }
 }

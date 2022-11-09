@@ -7,7 +7,17 @@ public class Main {
     public static void main(String[] args) {
         readHandler.init();
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Welcome to Legends!");
+        System.out.println("  <=======]}======\n" +
+                "    --.   /|\n" +
+                "   _\\\"/_.'/\n" +
+                " .'._._,.'\n" +
+                " :/ \\{}/\n" +
+                "(L  /--',----._\n" +
+                "    |          \\\\\n" +
+                "   : /-\\ .'-'\\ / |\n" +
+                "snd \\\\, ||    \\|\n" +
+                "     \\/ ||    ||");
+        System.out.println("Welcome to Legends: Monsters and Heroes");
         System.out.println("Enter size of map:");
         int size = scanner.nextInt();
         System.out.println("How many heroes?");
@@ -38,11 +48,15 @@ public class Main {
 
             System.out.println("Which " + chosenHero + " would you like?");
             int heroNum = scanner.nextInt();
-            gameData.heroes.add(readHandler.getHero(chosenHero, heroNum));
+            Hero chosenHeroObj = readHandler.getHero(chosenHero, heroNum);
+            chosenHeroObj.printHero();
+            //gameData.heroes.add(readHandler.getHero(chosenHero, heroNum));
         }
 
-        // print hashmap of hero
-        gameData.printAllHeroes();
+        System.out.println("Your team:");
+        for (Hero hero : gameData.heroes) {
+            hero.printHero();
+        }
         System.out.println(map.printMap());
     }
 }
