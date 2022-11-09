@@ -21,4 +21,18 @@ public class PrettyPrint {
     public void clearScreen() {
         System.out.print("\033\143");
     }
+
+    public static void healthBarPrinter(int currentHp, int maxHp) {
+        int healthBarLength = 20;
+        int healthBarCurrent = (int) Math.round((double) currentHp / maxHp * healthBarLength);
+        String healthBar = "";
+        for (int i = 0; i < healthBarLength; i++) {
+            if (i < healthBarCurrent) {
+                healthBar += GREEN + "█" + RESET;
+            } else {
+                healthBar += RED + "█" + RESET;
+            }
+        }
+        System.out.println(healthBar);
+    }
 }

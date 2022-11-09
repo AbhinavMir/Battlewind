@@ -5,6 +5,16 @@ public class Characters {
     int level;
     int exp;
     int hp;
+    int currentHp;
+
+    public int getCurrentHp() {
+        return currentHp;
+    }
+
+    public void setCurrentHp(int currentHp) {
+        this.currentHp = currentHp;
+    }
+
     int baseDamage;
 
     public Characters(String name, int level, int exp, int hp, int baseDamage) {
@@ -64,31 +74,7 @@ public class Characters {
         this.setHp(this.getLevel() * 100);
     }
 
-    class Spell
-    {
-        String name;
-        int cost;
-        int requiredLevel;
-        int damage;
-        int manaCost;
-        public Spell(String name, int cost, int requiredLevel, int damage, int manaCost)
-        {
-            this.name = name;
-            this.cost = cost;
-            this.requiredLevel = requiredLevel;
-            this.damage = damage;
-            this.manaCost = manaCost;
-        }
-    }
-
     public static class Monster extends Characters {
-        enum monsterType {
-            DRAGON,
-            SPIRIT,
-            EXOSKELETON
-
-        }
-
         // Name/level/damage/defense/dodge chance
         int damage;
         int defense;
@@ -99,10 +85,38 @@ public class Characters {
             this.damage = damage;
             this.dodgeChance = dodgeChance;
         }
+
+        public int getDamage() {
+            return damage;
+        }
+
+        public void setDamage(int damage) {
+            this.damage = damage;
+        }
+
+        public int getDefense() {
+            return defense;
+        }
+
+        public void setDefense(int defense) {
+            this.defense = defense;
+        }
+
+        public int getDodgeChance() {
+            return dodgeChance;
+        }
+
+        public void setDodgeChance(int dodgeChance) {
+            this.dodgeChance = dodgeChance;
+        }
+
+        enum monsterType {
+            DRAGON, SPIRIT, EXOSKELETON
+
+        }
     }
 
-    static class Player
-    {
+    static class Player {
         ArrayList<Hero> group = new ArrayList<>();
     }
 
@@ -119,12 +133,12 @@ public class Characters {
         int x;
         int y;
         heroType type;
+        ArrayList<Spell> spells = new ArrayList<>();
+        ArrayList<Potion> potions = new ArrayList<>();
+        ArrayList<Weapon> weapons = new ArrayList<>();
+        ArrayList<Armor> armors = new ArrayList<>();
 
-        public Hero(
-                String name, int mana, int strength, int agility,
-                int dexterity, int startingMoney, int startingExperience,
-                heroType type, int hp, int baseDamage
-        ) {
+        public Hero(String name, int mana, int strength, int agility, int dexterity, int startingMoney, int startingExperience, heroType type, int hp, int baseDamage) {
             super(name, 0, startingExperience, hp, baseDamage);
             this.mana = mana;
             this.type = type;
@@ -133,6 +147,10 @@ public class Characters {
             this.strength = strength;
             this.dexterity = dexterity;
             this.agility = agility;
+        }
+
+        public void payGold(int amount) {
+            this.setGold(this.getGold() - amount);
         }
 
         public Hero() {
@@ -252,6 +270,22 @@ public class Characters {
 
         enum heroType {
             WARRIOR, PALADIN, SORCERER
+        }
+    }
+
+    class Spell {
+        String name;
+        int cost;
+        int requiredLevel;
+        int damage;
+        int manaCost;
+
+        public Spell(String name, int cost, int requiredLevel, int damage, int manaCost) {
+            this.name = name;
+            this.cost = cost;
+            this.requiredLevel = requiredLevel;
+            this.damage = damage;
+            this.manaCost = manaCost;
         }
     }
 }

@@ -17,11 +17,11 @@ public class readHandler {
     String armory = "Name/cost/required level/damage reduction";
     String monster = "Name/level/damage/defense/dodge chance";
     String hero = "Name/mana/strength/agility/dexterity/starting money/starting experience";
-    ArrayList<Spell> listOfLightningSpells = new ArrayList<>(); // spells
-    ArrayList<Spell> listOfFireballSpells = new ArrayList<>(); // spells
-    ArrayList<Spell> listOfIceSpells = new ArrayList<>(); // spells
-    ArrayList<Weapon> listOfWeapons = new ArrayList<>(); // weapons
-    ArrayList<Armor> listOfArmors = new ArrayList<>();    // armors
+    static ArrayList<Spell> listOfLightningSpells = new ArrayList<>(); // spells
+    static ArrayList<Spell> listOfFireballSpells = new ArrayList<>(); // spells
+    static ArrayList<Spell> listOfIceSpells = new ArrayList<>(); // spells
+    static ArrayList<Weapon> listOfWeapons = new ArrayList<>(); // weapons
+    static ArrayList<Armor> listOfArmors = new ArrayList<>();    // armors
 
     public static void readPotions(String potionData) {
         String keys = "Name/cost/required level/attribute increase/attribute affected";
@@ -128,6 +128,10 @@ public class readHandler {
             }
         }
     }
+
+    public static void printMonster(Characters.Monster monster)
+    {
+            System.out.println(monster.getName() + " | " + monster.getLevel() + " | " + monster.getDamage() + " | " + monster.getDefense() + " | " + monster.getDodgeChance()); }
 
     public static Characters.Hero getHero(String chosenHero, int index) {
         // string to enum
@@ -248,23 +252,23 @@ public class readHandler {
         return listOfPotions;
     }
 
-    public ArrayList<Spell> getListOfLightningSpells() {
+    public static ArrayList<Spell> getListOfLightningSpells() {
         return listOfLightningSpells;
     }
 
-    public ArrayList<Spell> getListOfFireballSpells() {
+    public static ArrayList<Spell> getListOfFireballSpells() {
         return listOfFireballSpells;
     }
 
-    public ArrayList<Spell> getListOfIceSpells() {
+    public static ArrayList<Spell> getListOfIceSpells() {
         return listOfIceSpells;
     }
 
-    public ArrayList<Weapon> getListOfWeapons() {
+    public static ArrayList<Weapon> getListOfWeapons() {
         return listOfWeapons;
     }
 
-    public ArrayList<Armor> getListOfArmors() {
+    public static ArrayList<Armor> getListOfArmors() {
         return listOfArmors;
     }
 }

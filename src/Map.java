@@ -14,12 +14,13 @@ public class Map {
 
     public static void main(String[] args) {
         PrettyPrint pp = new PrettyPrint();
+        readHandler.init();
         Map map = new Map(1, 10, 10);
         map.initializeMap();
         System.out.println(map.printMap());
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("Hero is at " + map.getPlayerPosition()[0] + " " + map.getPlayerPosition()[1]);
+            // System.out.println("Hero is at " + map.getPlayerPosition()[0] + " " + map.getPlayerPosition()[1]);
             String move = scanner.nextLine();
             map.movePlayerOnMap(move);
             System.out.println(map.printMap());
@@ -85,12 +86,11 @@ public class Map {
             if (x_current == 0 || map[x_current - 1][y_current].type == tileType.INACCESSIBLE) {
                 System.out.println("You can't move there!");
             } else {
-                if(promptBattle(map[x_current - 1][y_current])) {
+                if (promptBattle(map[x_current - 1][y_current])) {
                     System.out.println("You encountered a monster!");
                     Battle battle = new Battle(3);
                     battle.startBattle();
-                }
-                else {
+                } else {
                     map[x_current][y_current].isPlayer = false;
                     map[x_current - 1][y_current].isPlayer = true;
                 }
@@ -99,12 +99,11 @@ public class Map {
             if (y_current == 0 || map[x_current][y_current - 1].type == tileType.INACCESSIBLE) {
                 System.out.println("You can't move there!");
             } else {
-                if(promptBattle(map[x_current][y_current - 1])) {
+                if (promptBattle(map[x_current][y_current - 1])) {
                     System.out.println("You encountered a monster!");
                     Battle battle = new Battle(3);
                     battle.startBattle();
-                }
-                else {
+                } else {
                     map[x_current][y_current].isPlayer = false;
                     map[x_current][y_current - 1].isPlayer = true;
                 }
@@ -113,12 +112,11 @@ public class Map {
             if (x_current == map.length - 1 || map[x_current + 1][y_current].type == tileType.INACCESSIBLE) {
                 System.out.println("You can't move there!");
             } else {
-                if(promptBattle(map[x_current + 1][y_current])) {
+                if (promptBattle(map[x_current + 1][y_current])) {
                     System.out.println("You encountered a monster!");
                     Battle battle = new Battle(3);
                     battle.startBattle();
-                }
-                else {
+                } else {
                     map[x_current][y_current].isPlayer = false;
                     map[x_current + 1][y_current].isPlayer = true;
                 }
@@ -127,12 +125,11 @@ public class Map {
             if (y_current == map[0].length - 1 || map[x_current][y_current + 1].type == tileType.INACCESSIBLE) {
                 System.out.println("You can't move there!");
             } else {
-                if(promptBattle(map[x_current][y_current + 1])) {
+                if (promptBattle(map[x_current][y_current + 1])) {
                     System.out.println("You encountered a monster!");
                     Battle battle = new Battle(3);
                     battle.startBattle();
-                }
-                else {
+                } else {
                     map[x_current][y_current].isPlayer = false;
                     map[x_current][y_current + 1].isPlayer = true;
                 }
