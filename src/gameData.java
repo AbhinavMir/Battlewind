@@ -14,7 +14,7 @@ public class gameData {
         heroes.add(hero);
     }
 
-    public Characters.Hero getHero(int id)
+    public static Characters.Hero getHero(int id)
     {
         return heroes.get(id);
     }

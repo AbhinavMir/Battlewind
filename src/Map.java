@@ -90,7 +90,7 @@ public class Map {
         if (move.equals("w")) {
             if (x_current == 0 || map[x_current - 1][y_current].type == tileType.INACCESSIBLE) {
                 System.out.println("You can't move there!");
-            } else if(map[x_current - 1][y_current].type == tileType.COMMON) {
+            } else if (map[x_current - 1][y_current].type == tileType.COMMON) {
                 if (promptBattle(map[x_current - 1][y_current])) {
                     System.out.println("You encountered a monster!");
                     Battle battle = new Battle(3);
@@ -99,12 +99,8 @@ public class Map {
                     map[x_current][y_current].isPlayer = false;
                     map[x_current - 1][y_current].isPlayer = true;
                 }
-            }
-            else if(map[x_current - 1][y_current].type == tileType.MARKET) {
-                System.out.println("Welcome to market!");
-                Characters.Player.getGold();
-                System.out.println("Would you like to buy, sell or leave?");
-                int userChoice = scanner.nextInt();
+            } else if (map[x_current - 1][y_current].type == tileType.MARKET) {
+                Market.prompt(scanner);
             }
         } else if (move.equals("a")) {
             if (y_current == 0 || map[x_current][y_current - 1].type == tileType.INACCESSIBLE) {

@@ -14,14 +14,44 @@ public class readHandler {
     static ArrayList<Characters.Monster> listOfSpirits = new ArrayList<>(); // monsters
     static ArrayList<Characters.Monster> listOfExoskeletons = new ArrayList<>(); // monsters
     static ArrayList<Potion> listOfPotions = new ArrayList<>(); // potions
+    static ArrayList<Characters.Spell> listOfLightningSpells = new ArrayList<>(); // spells
+    static ArrayList<Characters.Spell> listOfFireballSpells = new ArrayList<>(); // spells
+    static ArrayList<Characters.Spell> listOfIceSpells = new ArrayList<>(); // spells
+    static ArrayList<Weapon> listOfWeapons = new ArrayList<>(); // weapons
+    static ArrayList<Armor> listOfArmors = new ArrayList<>();    // armors
     String armory = "Name/cost/required level/damage reduction";
     String monster = "Name/level/damage/defense/dodge chance";
     String hero = "Name/mana/strength/agility/dexterity/starting money/starting experience";
-    static ArrayList<Spell> listOfLightningSpells = new ArrayList<>(); // spells
-    static ArrayList<Spell> listOfFireballSpells = new ArrayList<>(); // spells
-    static ArrayList<Spell> listOfIceSpells = new ArrayList<>(); // spells
-    static ArrayList<Weapon> listOfWeapons = new ArrayList<>(); // weapons
-    static ArrayList<Armor> listOfArmors = new ArrayList<>();    // armors
+
+    public static void printAllPotions() {
+        for (Potion potion : listOfPotions) {
+            System.out.println(potion.name + PrettyPrint.BLUE + " costs " + potion.cost + PrettyPrint.RESET + " / Required level: " + potion.requiredLevel + " / Attribute affected: " + potion.attributeAffected + " / Amount increase" + potion.attributeIncrease);
+        }
+    }
+
+    public static void getAllWeapons() {
+        for (Weapon weapon : listOfWeapons) {
+            System.out.println(weapon.name + PrettyPrint.BLUE + " costs " + weapon.cost + PrettyPrint.RESET + " / Required level: " + weapon.requiredLevel + " / Damage: " + weapon.damage);
+        }
+    }
+
+    public static void getAllArmors() {
+        for (Armor armor : listOfArmors) {
+            System.out.println(armor.name + PrettyPrint.BLUE + " costs " + armor.cost + PrettyPrint.RESET + " / Required level: " + armor.requiredLevel + " / Damage reduction: " + armor.damageReduction);
+        }
+    }
+
+    public static void getAllSpells() {
+        for (Characters.Spell spell : listOfLightningSpells) {
+            System.out.println(spell.name + PrettyPrint.BLUE + " costs " + spell.cost + PrettyPrint.RESET + " / Required level: " + spell.requiredLevel + " / Damage: " + spell.damage + " / Mana cost: " + spell.manaCost);
+        }
+        for (Characters.Spell spell : listOfFireballSpells) {
+            System.out.println(spell.name + PrettyPrint.BLUE + " costs " + spell.cost + PrettyPrint.RESET + " / Required level: " + spell.requiredLevel + " / Damage: " + spell.damage + " / Mana cost: " + spell.manaCost);
+        }
+        for (Characters.Spell spell : listOfIceSpells) {
+            System.out.println(spell.name + PrettyPrint.BLUE + " costs " + spell.cost + PrettyPrint.RESET + " / Required level: " + spell.requiredLevel + " / Damage: " + spell.damage + " / Mana cost: " + spell.manaCost);
+        }
+    }
 
     public static void readPotions(String potionData) {
         String keys = "Name/cost/required level/attribute increase/attribute affected";
@@ -129,9 +159,9 @@ public class readHandler {
         }
     }
 
-    public static void printMonster(Characters.Monster monster)
-    {
-            System.out.println(monster.getName() + " | " + monster.getLevel() + " | " + monster.getDamage() + " | " + monster.getDefense() + " | " + monster.getDodgeChance()); }
+    public static void printMonster(Characters.Monster monster) {
+        System.out.println(monster.getName() + " | " + monster.getLevel() + " | " + monster.getDamage() + " | " + monster.getDefense() + " | " + monster.getDodgeChance());
+    }
 
     public static Characters.Hero getHero(String chosenHero, int index) {
         // string to enum
@@ -252,15 +282,15 @@ public class readHandler {
         return listOfPotions;
     }
 
-    public static ArrayList<Spell> getListOfLightningSpells() {
+    public static ArrayList<Characters.Spell> getListOfLightningSpells() {
         return listOfLightningSpells;
     }
 
-    public static ArrayList<Spell> getListOfFireballSpells() {
+    public static ArrayList<Characters.Spell> getListOfFireballSpells() {
         return listOfFireballSpells;
     }
 
-    public static ArrayList<Spell> getListOfIceSpells() {
+    public static ArrayList<Characters.Spell> getListOfIceSpells() {
         return listOfIceSpells;
     }
 
