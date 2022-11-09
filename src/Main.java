@@ -1,7 +1,13 @@
 import java.util.Scanner;
 import java.util.logging.Logger;
 
+/*
+Usage under: https://en.wikipedia.org/wiki/MIT_License
+Developer: Abhinav (github.com/abhinavmir)
+ */
+
 public class Main {
+
     static Logger logger = Logger.getLogger(Main.class.getName());
     public static void main(String[] args) {
         // readHandler.init();
