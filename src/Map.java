@@ -3,6 +3,7 @@ import java.util.Scanner;
 import java.util.logging.*;
 
 public class Map {
+    PrettyPrint pp = new PrettyPrint();
     static Tile[][] backupMap;
     Logger logger = Logger.getLogger(Map.class.getName());
     Tile[][] map;
@@ -16,9 +17,9 @@ public class Map {
         Map map = new Map(1, 10, 10);
         map.initializeMap();
         System.out.println(map.printMap());
-        // print out backup map
-        System.out.println("Backup map:");
-        System.out.println(map.printBackupMap());
+        Scanner scanner = new Scanner(System.in);
+        String move = scanner.nextLine();
+        //map.movePlayer(move);
     }
 
     public void initializeMap() {
@@ -47,67 +48,29 @@ public class Map {
 
     public String tileImage(tileType tile) {
         if (tile == tileType.COMMON) {
-            return " (C) ";
+            return ""+pp.GREEN_BACKGROUND + "(C)" + pp.RESET+"";
         } else if (tile == tileType.INACCESSIBLE) {
-            return " (X) ";
+            return ""+pp.RED_BACKGROUND + "(X)" + pp.RESET+"";
         } else if (tile == tileType.MARKET) {
-            return " (M) ";
+            return ""+pp.BLUE_BACKGROUND + "(M)" + pp.RESET+"";
         } else if (tile == tileType.PLAYER) {
-            return " YOU ";
+            return ""+pp.YELLOW_BACKGROUND + "YOU" + pp.RESET+"";
         }
 
         return "ERR";
     }
 
-    public String movePlayer(Hero hero, String move) {
-        // convert to lowercase and check if moves are within WASD
-        move = move.toLowerCase();
-        logger.info("Move: " + move);
-        if (move.equals("w") || move.equals("a") || move.equals("s") || move.equals("d")) {
-            logger.info("Move is WASD");
-            int x_current = hero.x;
-            int y_current = hero.y;
-            logger.info("Current x: " + x_current);
-            logger.info("Current y: " + y_current);
-            // switch case
-            if (move.equals("w")) {
-                if (y_current - 1 >= 0) {
-                    // update map
-                    this.map[x_current][y_current].setType(backupMap[x_current][y_current].type);
-                    hero.y = y_current - 1;
-                    this.map[hero.x][hero.y].setType(tileType.PLAYER);
-                }
-            } else if (move.equals("a")) {
-                if (x_current - 1 >= 0) {
-                    // update map
-                    this.map[x_current][y_current].setType(backupMap[x_current][y_current].type);
-                    hero.x = x_current - 1;
-                    this.map[hero.x][hero.y].setType(tileType.PLAYER);
-                }
-            } else if (move.equals("s")) {
-                if (y_current + 1 < this.map[0].length) {
-                    // update map
-                    this.map[x_current][y_current].setType(backupMap[x_current][y_current].type);
-                    hero.y = y_current + 1;
-                    this.map[hero.x][hero.y].setType(tileType.PLAYER);
-                }
-            } else if (move.equals("d")) {
-                if (x_current + 1 < this.map.length) {
-                    // update map
-                    this.map[x_current][y_current].setType(backupMap[x_current][y_current].type);
-                    hero.x = x_current + 1;
-                    this.map[hero.x][hero.y].setType(tileType.PLAYER);
+   public int[] getPlayerPosition() {
+        int[] playerPosition = new int[2];
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
+                if (map[i][j].getType() == tileType.PLAYER) {
+                    playerPosition[0] = i;
+                    playerPosition[1] = j;
                 }
             }
-
-            logger.info("New x: " + hero.x);
-            logger.info("New y: " + hero.y);
-        } else {
-            System.out.println("Invalid move");
         }
-
-
-        return null;
+        return playerPosition;
     }
 
     public String printMap() {
