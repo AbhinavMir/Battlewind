@@ -6,26 +6,15 @@ public class Map {
     PrettyPrint pp = new PrettyPrint();
     Logger logger = Logger.getLogger(Map.class.getName());
     Tile[][] map;
-    Tile[][] mapBackup;
 
     public Map(int seed, int x, int y) {
         map = new Tile[x][y];
-        mapBackup = new Tile[x][y];
         populateMap(seed, x, y);
-    }
-
-    public void duplicateMap(Tile[][] x, Tile[][] y) {
-        for (int i = 0; i < x.length; i++) {
-            for (int j = 0; j < x[i].length; j++) {
-                y[i][j] = x[i][j];
-            }
-        }
     }
 
     public static void main(String[] args) {
         PrettyPrint pp = new PrettyPrint();
         Map map = new Map(1, 10, 10);
-        map.duplicateMap(map.map, map.mapBackup);
         map.initializeMap();
         System.out.println(map.printMap());
         Scanner scanner = new Scanner(System.in);
@@ -36,7 +25,7 @@ public class Map {
                 {
                     if(map.mapBackup[i][j].type == tileType.PLAYER)
                     {
-                        System.out.println("Hero at " + i + " " + j);
+                        System.out.println("Characters.Hero at " + i + " " + j);
                     }
                 }
             }
@@ -91,29 +80,30 @@ public class Map {
             if (x_current == 0 || map[x_current - 1][y_current].type == tileType.INACCESSIBLE) {
                 System.out.println("You can't move there!");
             } else {
-                tileType currentType = map[x_current][y_current].type;
-                map[x_current][y_current].setType(tileType.COMMON);
+                map[x_current][y_current].setType(mapBackup[x_current][y_current].type);
                 map[x_current - 1][y_current].setType(tileType.PLAYER);
             }
         } else if (move.equals("a")) {
             if (y_current == 0 || map[x_current][y_current - 1].type == tileType.INACCESSIBLE) {
                 System.out.println("You can't move there!");
             } else {
-                map[x_current][y_current].setType(tileType.COMMON);
+                map[x_current][y_current].setType(mapBackup[x_current][y_current].type);
+                map[x_current][y_current].setType(mapBackup[x_current][y_current].type);
+                map[x_current][y_current].setType(mapBackup[x_current][y_current].type);
                 map[x_current][y_current - 1].setType(tileType.PLAYER);
             }
         } else if (move.equals("s")) {
             if (x_current == map.length - 1 || map[x_current + 1][y_current].type == tileType.INACCESSIBLE) {
                 System.out.println("You can't move there!");
             } else {
-                map[x_current][y_current].setType(tileType.COMMON);
+                map[x_current][y_current].setType(mapBackup[x_current][y_current].type);
                 map[x_current + 1][y_current].setType(tileType.PLAYER);
             }
         } else if (move.equals("d")) {
             if (y_current == map[0].length - 1 || map[x_current][y_current + 1].type == tileType.INACCESSIBLE) {
                 System.out.println("You can't move there!");
             } else {
-                map[x_current][y_current].setType(tileType.COMMON);
+                map[x_current][y_current].setType(mapBackup[x_current][y_current].type);
                 map[x_current][y_current + 1].setType(tileType.PLAYER);
             }
         }
@@ -146,13 +136,14 @@ public class Map {
     }
 
     enum tileType {
-        INACCESSIBLE, MARKET, COMMON, PLAYER
+        INACCESSIBLE, MARKET, COMMON
     }
 
     class Tile {
         tileType type;
         int x;
         int y;
+        boolean isPlayer;
 
         public Tile(tileType type, int x, int y) {
             this.type = type;

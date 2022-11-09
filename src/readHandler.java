@@ -7,19 +7,19 @@ import java.util.logging.Logger;
 public class readHandler {
 
     private static final Logger logger = Logger.getLogger(readHandler.class.getName());
-    static ArrayList<Hero> listOfPaladins = new ArrayList<>(); // heroes
-    static ArrayList<Hero> listOfSorcerers = new ArrayList<>(); // heroes
-    static ArrayList<Hero> listOfWarriors = new ArrayList<>(); // heroes
+    static ArrayList<Characters.Hero> listOfPaladins = new ArrayList<>(); // heroes
+    static ArrayList<Characters.Hero> listOfSorcerers = new ArrayList<>(); // heroes
+    static ArrayList<Characters.Hero> listOfWarriors = new ArrayList<>(); // heroes
     String armory = "Name/cost/required level/damage reduction";
     String monster = "Name/level/damage/defense/dodge chance";
     String hero = "Name/mana/strength/agility/dexterity/starting money/starting experience";
-    ArrayList<Monster> listOfMonsters = new ArrayList<>(); // monsters
+    ArrayList<Characters.Monster> listOfMonsters = new ArrayList<>(); // monsters
     ArrayList<Spell> listOfSpells = new ArrayList<>(); // spells
     ArrayList<itemBaseClass.Potion> listOfPotions = new ArrayList<>(); // potions
     ArrayList<itemBaseClass.Weapon> listOfWeapons = new ArrayList<>(); // weapons
     ArrayList<itemBaseClass.Armor> listOfArmors = new ArrayList<>();    // armors
 
-    public static void readHeroes(String heroData, Hero.heroType type) {
+    public static void readHeroes(String heroData, Characters.Hero.heroType type) {
         String keys = "Name/mana/strength/agility/dexterity/starting money/starting experience";
         // remove Name/mana/strength/agility/dexterity/starting money/starting experience from heroData using replace
         heroData = heroData.replace(keys, "");
@@ -42,7 +42,7 @@ public class readHandler {
             // int dexterity, int startingMoney, int startingExperience, heroType type,
             // int level, int exp, int hp, int baseDamage
 
-            Hero hero = new Hero(name, mana, strength, agility, dexterity, startingMoney, startingExp, type);
+            Characters.Hero hero = new Characters.Hero(name, mana, strength, agility, dexterity, startingMoney, startingExp, type);
 
             switch (type) {
                 case PALADIN:
@@ -58,32 +58,32 @@ public class readHandler {
         }
     }
 
-    public static void printHeroes(Hero.heroType type) {
+    public static void printHeroes(Characters.Hero.heroType type) {
         // print keys
         System.out.println("Name | mana | strength | agility | dexterity | starting money | starting experience");
-        if (type == Hero.heroType.PALADIN) {
-            for (Hero hero : listOfPaladins) {
+        if (type == Characters.Hero.heroType.PALADIN) {
+            for (Characters.Hero hero : listOfPaladins) {
                 System.out.println(hero.getName() + " | " + hero.getMana() + " | " + hero.getStrength() + " | " + hero.getAgility() + " | " + hero.getDexterity() + " | " + hero.getStartingMoney() + " | " + hero.getStartingExperience());
             }
-        } else if (type == Hero.heroType.SORCERER) {
-            for (Hero hero : listOfSorcerers) {
+        } else if (type == Characters.Hero.heroType.SORCERER) {
+            for (Characters.Hero hero : listOfSorcerers) {
                 System.out.println(hero.getName() + " | " + hero.getMana() + " | " + hero.getStrength() + " | " + hero.getAgility() + " | " + hero.getDexterity() + " | " + hero.getStartingMoney() + " | " + hero.getStartingExperience());
             }
-        } else if (type == Hero.heroType.WARRIOR) {
-            for (Hero hero : listOfWarriors) {
+        } else if (type == Characters.Hero.heroType.WARRIOR) {
+            for (Characters.Hero hero : listOfWarriors) {
                 System.out.println(hero.getName() + " | " + hero.getMana() + " | " + hero.getStrength() + " | " + hero.getAgility() + " | " + hero.getDexterity() + " | " + hero.getStartingMoney() + " | " + hero.getStartingExperience());
             }
         }
     }
 
-    public static Hero getHero(String chosenHero, int index) {
+    public static Characters.Hero getHero(String chosenHero, int index) {
         // string to enum
-        Hero.heroType type = Hero.heroType.valueOf(chosenHero.toUpperCase());
-        if (type == Hero.heroType.PALADIN) {
+        Characters.Hero.heroType type = Characters.Hero.heroType.valueOf(chosenHero.toUpperCase());
+        if (type == Characters.Hero.heroType.PALADIN) {
             return listOfPaladins.get(index);
-        } else if (type == Hero.heroType.SORCERER) {
+        } else if (type == Characters.Hero.heroType.SORCERER) {
             return listOfSorcerers.get(index);
-        } else if (type == Hero.heroType.WARRIOR) {
+        } else if (type == Characters.Hero.heroType.WARRIOR) {
             return listOfWarriors.get(index);
         }
 
@@ -125,8 +125,8 @@ public class readHandler {
         String paladins = readThisFiles("gameUtils/", "Paladins");
         String sorcerers = readThisFiles("gameUtils/", "Sorcerers");
         String warriors = readThisFiles("gameUtils/", "Warriors");
-        readHeroes(paladins, Hero.heroType.PALADIN);
-        readHeroes(sorcerers, Hero.heroType.SORCERER);
-        readHeroes(warriors, Hero.heroType.WARRIOR);
+        readHeroes(paladins, Characters.Hero.heroType.PALADIN);
+        readHeroes(sorcerers, Characters.Hero.heroType.SORCERER);
+        readHeroes(warriors, Characters.Hero.heroType.WARRIOR);
     }
 }

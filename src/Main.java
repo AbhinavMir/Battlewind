@@ -1,4 +1,3 @@
-import java.util.HashMap;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
@@ -33,28 +32,28 @@ public class Main {
             if(userChoice == 1)
             {
                 chosenHero = "Warrior";
-                readHandler.printHeroes(Hero.heroType.WARRIOR);
+                readHandler.printHeroes(Characters.Hero.heroType.WARRIOR);
             }
             else if(userChoice == 2)
             {
                 chosenHero = "Paladin";
-                readHandler.printHeroes(Hero.heroType.PALADIN);
+                readHandler.printHeroes(Characters.Hero.heroType.PALADIN);
             }
             else if(userChoice == 3)
             {
                 chosenHero = "Sorcerer";
-                readHandler.printHeroes(Hero.heroType.SORCERER);
+                readHandler.printHeroes(Characters.Hero.heroType.SORCERER);
             }
 
             System.out.println("Which " + chosenHero + " would you like?");
             int heroNum = scanner.nextInt();
-            Hero chosenHeroObj = readHandler.getHero(chosenHero, heroNum);
+            Characters.Hero chosenHeroObj = readHandler.getHero(chosenHero, heroNum);
             chosenHeroObj.printHero();
             //gameData.heroes.add(readHandler.getHero(chosenHero, heroNum));
         }
 
         System.out.println("Your team:");
-        for (Hero hero : gameData.heroes) {
+        for (Characters.Hero hero : gameData.heroes) {
             hero.printHero();
         }
         System.out.println(map.printMap());
