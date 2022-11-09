@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /*
@@ -10,7 +11,8 @@ public class Main {
 
     static Logger logger = Logger.getLogger(Main.class.getName());
     public static void main(String[] args) {
-        // readHandler.init();
+        readHandler.init();
+        logger.setLevel(Level.ALL);
         Scanner scanner = new Scanner(System.in);
         System.out.println("  <=======]}======\n" +
                 "    --.   /|\n" +

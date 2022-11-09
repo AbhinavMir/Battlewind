@@ -112,7 +112,9 @@ public class readHandler {
     public static void printHeroes(Characters.Hero.heroType type) {
         // print keys
         System.out.println("Name | mana | strength | agility | dexterity | starting money | starting experience");
+        logger.info("Here we reached the printHeroes method");
         if (type == Characters.Hero.heroType.PALADIN) {
+            logger.info("Here we reached the printHeroes method for paladins");
             for (Characters.Hero hero : listOfPaladins) {
                 System.out.println(hero.getName() + " | " + hero.getMana() + " | " + hero.getStrength() + " | " + hero.getAgility() + " | " + hero.getDexterity() + " | " + hero.getStartingMoney() + " | " + hero.getStartingExperience());
             }
@@ -203,11 +205,66 @@ public class readHandler {
             ManualHandler.loadDragonsManually();
             logger.info("Dragons loaded manually");
         }
-
     }
 
     public static void main(String[] args) {
         logger.setLevel(Level.OFF);
         init();
+    }
+
+    public static ArrayList<Characters.Hero> getListOfPaladins() {
+        return listOfPaladins;
+    }
+
+    public static ArrayList<Characters.Monster> getAllMonsters() {
+        ArrayList<Characters.Monster> allMonsters = new ArrayList<>();
+        allMonsters.addAll(listOfDragons);
+        allMonsters.addAll(listOfExoskeletons);
+        allMonsters.addAll(listOfSpirits);
+        return allMonsters;
+    }
+
+    public static ArrayList<Characters.Hero> getListOfSorcerers() {
+        return listOfSorcerers;
+    }
+
+    public static ArrayList<Characters.Hero> getListOfWarriors() {
+        return listOfWarriors;
+    }
+
+    public static ArrayList<Characters.Monster> getListOfDragons() {
+        return listOfDragons;
+    }
+
+    public static ArrayList<Characters.Monster> getListOfSpirits() {
+        return listOfSpirits;
+    }
+
+    public static ArrayList<Characters.Monster> getListOfExoskeletons() {
+        return listOfExoskeletons;
+    }
+
+    public static ArrayList<Potion> getListOfPotions() {
+        return listOfPotions;
+    }
+
+    public ArrayList<Spell> getListOfLightningSpells() {
+        return listOfLightningSpells;
+    }
+
+    public ArrayList<Spell> getListOfFireballSpells() {
+        return listOfFireballSpells;
+    }
+
+    public ArrayList<Spell> getListOfIceSpells() {
+        return listOfIceSpells;
+    }
+
+    public ArrayList<Weapon> getListOfWeapons() {
+        return listOfWeapons;
+    }
+
+    public ArrayList<Armor> getListOfArmors() {
+        return listOfArmors;
     }
 }

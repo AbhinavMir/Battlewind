@@ -20,10 +20,10 @@ public class Map {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("Hero is at " + map.getPlayerPosition()[0] + " " + map.getPlayerPosition()[1]);
-            pp.clearScreen();
             String move = scanner.nextLine();
             map.movePlayerOnMap(move);
             System.out.println(map.printMap());
+            // pp.clearScreen();
         }
     }
 
@@ -87,7 +87,7 @@ public class Map {
             } else {
                 if(promptBattle(map[x_current - 1][y_current])) {
                     System.out.println("You encountered a monster!");
-                    Battle battle = new Battle();
+                    Battle battle = new Battle(3);
                     battle.startBattle();
                 }
                 else {
@@ -101,7 +101,7 @@ public class Map {
             } else {
                 if(promptBattle(map[x_current][y_current - 1])) {
                     System.out.println("You encountered a monster!");
-                    Battle battle = new Battle();
+                    Battle battle = new Battle(3);
                     battle.startBattle();
                 }
                 else {
@@ -115,7 +115,7 @@ public class Map {
             } else {
                 if(promptBattle(map[x_current + 1][y_current])) {
                     System.out.println("You encountered a monster!");
-                    Battle battle = new Battle();
+                    Battle battle = new Battle(3);
                     battle.startBattle();
                 }
                 else {
@@ -129,7 +129,7 @@ public class Map {
             } else {
                 if(promptBattle(map[x_current][y_current + 1])) {
                     System.out.println("You encountered a monster!");
-                    Battle battle = new Battle();
+                    Battle battle = new Battle(3);
                     battle.startBattle();
                 }
                 else {

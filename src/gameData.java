@@ -6,6 +6,7 @@ public class gameData {
      */
 
     static ArrayList<Characters.Hero> heroes = new ArrayList<>();
+
     ArrayList<itemBaseClass> inventory = new ArrayList<>();
 
     public static void addHero(Characters.Hero hero)

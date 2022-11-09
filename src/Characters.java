@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Characters {
     String name;
     int level;
@@ -97,6 +99,11 @@ public class Characters {
             this.damage = damage;
             this.dodgeChance = dodgeChance;
         }
+    }
+
+    static class Player
+    {
+        ArrayList<Hero> group = new ArrayList<>();
     }
 
     public static class Hero extends Characters {
