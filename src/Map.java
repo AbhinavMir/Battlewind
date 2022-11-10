@@ -23,12 +23,7 @@ public class Map {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             // System.out.println("Hero is at " + map.getPlayerPosition()[0] + " " + map.getPlayerPosition()[1]);
-            String move;
-            try {
-                move = scanner.nextLine();
-            } catch (Exception e) {
-                move = "w";
-            }
+            String move = scanner.nextLine();
             map.movePlayerOnMap(move);
             System.out.println(map.printMap());
             // pp.clearScreen();
