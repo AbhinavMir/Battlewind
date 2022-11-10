@@ -57,8 +57,7 @@ public class ManualHandler {
         }
     }
 
-    public static void loadLightningSpellManually()
-    {
+    public static void loadLightningSpellManually() {
         // Name/cost/required level/damage/mana cost
         String name = "";
         int cost = 0;
@@ -95,10 +94,10 @@ public class ManualHandler {
 
             Spell lightningSpell = new Spell(name, cost, requiredLevel, damage, manaCost);
             readHandler.listOfLightningSpells.add(lightningSpell);
-    }}
+        }
+    }
 
-    public static void loadFireSpells()
-    {
+    public static void loadFireSpells() {
         /*
         Name/cost/required level/damage/mana cost
 Flame_Tornado   700     4   850     300
@@ -152,7 +151,104 @@ Hell_Storm      600     3   950     600
         }
     }
 
+    public static void loadWeaponsManually() {
+        /*
+        Name/cost/level/damage/required hands
+Sword           500     1    800    1
+Bow             300     2    500    2
+Scythe          1000    6    1100   2
+Axe             550     5    850    1
+TSwords     	1400    8    1600   2
+Dagger          200     1    250    1
+         */
+        String name = "";
+        int cost = 0;
+        int level = 0;
+        int damage = 0;
+        int requiredHands = 0;
 
+        for (int i = 0; i < 6; i++) {
+            if (i == 0) {
+                name = "Sword";
+                cost = 500;
+                level = 1;
+                damage = 800;
+                requiredHands = 1;
+            } else if (i == 1) {
+                name = "Bow";
+                cost = 300;
+                level = 2;
+                damage = 500;
+                requiredHands = 2;
+            } else if (i == 2) {
+                name = "Scythe";
+                cost = 1000;
+                level = 6;
+                damage = 1100;
+                requiredHands = 2;
+            } else if (i == 3) {
+                name = "Axe";
+                cost = 550;
+                level = 5;
+                damage = 850;
+                requiredHands = 1;
+            } else if (i == 4) {
+                name = "TSwords";
+                cost = 1400;
+                level = 8;
+                damage = 1600;
+                requiredHands = 2;
+            } else if (i == 5) {
+                name = "Dagger";
+                cost = 200;
+                level = 1;
+                damage = 250;
+                requiredHands = 1;
+            }
+
+            Weapon weapon = new Weapon(name, cost, level, damage, requiredHands);
+            readHandler.listOfWeapons.add(weapon);
+        }
+    }
+
+    public static void loadIceSpellsManually() {
+        String name = "";
+        int cost = 0;
+        int requiredLevel = 0;
+        int damage = 0;
+        int manaCost = 0;
+
+        for (int i = 0; i < 4; i++) {
+            if (i == 0) {
+                name = "Snow_Cannon";
+                cost = 500;
+                requiredLevel = 2;
+                damage = 650;
+                manaCost = 250;
+            } else if (i == 1) {
+                name = "Ice_Blade";
+                cost = 250;
+                requiredLevel = 1;
+                damage = 450;
+                manaCost = 100;
+            } else if (i == 2) {
+                name = "Frost_Blizzard";
+                cost = 750;
+                requiredLevel = 5;
+                damage = 850;
+                manaCost = 350;
+            } else if (i == 3) {
+                name = "Arctic_Storm";
+                cost = 700;
+                requiredLevel = 6;
+                damage = 800;
+                manaCost = 300;
+            }
+
+            Spell iceSpell = new Spell(name, cost, requiredLevel, damage, manaCost);
+            readHandler.listOfIceSpells.add(iceSpell);
+        }
+    }
 
     public static void loadDragonsManually() {
         String name = null;

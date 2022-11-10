@@ -273,26 +273,17 @@ public class readHandler {
         String weapons = readThisFiles("gameUtils/", "Weaponry");
         String armors = readThisFiles("gameUtils/", "Armory");
         readHeroes(paladins, Characters.Hero.heroType.PALADIN);
-        try {
-            readPotions(potions);
-        } catch (Exception e) {
-            ManualHandler.loadPotionsManually();
-            System.out.println("Error reading potions");
-        }
         readHeroes(sorcerers, Characters.Hero.heroType.SORCERER);
         readHeroes(warriors, Characters.Hero.heroType.WARRIOR);
         readMonsters(spirits, Characters.Monster.monsterType.SPIRIT);
         readMonsters(exoskeletons, Characters.Monster.monsterType.EXOSKELETON);
+        ManualHandler.loadDragonsManually();
+        ManualHandler.loadLightningSpellManually();
+        ManualHandler.loadFireSpells();
+        ManualHandler.loadIceSpellsManually();
+        ManualHandler.loadPotionsManually();
         readWeapons(weapons);
         readArmors(armors);
-        try {
-            readMonsters(dragons, Characters.Monster.monsterType.DRAGON);
-            logger.info("Dragons loaded");
-        } catch (Exception e) {
-            logger.log(Level.WARNING, "Error reading dragons", e);
-            ManualHandler.loadDragonsManually();
-            logger.info("Dragons loaded manually");
-        }
     }
 
     public static ArrayList<Characters.Hero> getListOfPaladins() {
