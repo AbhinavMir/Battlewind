@@ -124,7 +124,7 @@ public class Map {
             } else if (map[x_current][y_current - 1].type == tileType.COMMON) {
                 if (promptBattle(map[x_current][y_current - 1])) {
                     System.out.println("You encountered a monster!");
-                    Battle battle = new Battle(3);
+                    Battle battle = new Battle(gameData.heroes.size());
                     battle.startBattle();
                 } else {
                     map[x_current][y_current].isPlayer = false;

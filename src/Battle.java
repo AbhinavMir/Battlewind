@@ -1,6 +1,3 @@
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -20,7 +17,7 @@ public class Battle {
 
     public Battle(int numHeroes) {
         this.numHeroes = numHeroes;
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < numHeroes; i++) {
             this.monsters.add(createMonster());
         }
     }
