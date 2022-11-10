@@ -115,6 +115,9 @@ public class Battle {
                     for (int i = 0; i < currentHero.getPotions().size(); i++) {
                         System.out.println(i + ". " + currentHero.getPotions().get(i).name);
                     }
+                    choice2 = scanner.nextInt();
+                    Potion potion = currentHero.getPotions().get(choice2);
+                    potion.usePotion(currentHero,potion);
                 }
             }
         }
