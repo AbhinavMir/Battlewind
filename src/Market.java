@@ -57,6 +57,8 @@ public class Market {
             System.out.println("2. Weapon");
             System.out.println("3. Armor");
             System.out.println("4. Spell");
+            System.out.println("5. Repellents");
+            System.out.println("6. Leave");
             int userChoice2 = 0;
             userChoice2 = scanner.nextInt();
             if (userChoice2 == 1) {
@@ -152,12 +154,19 @@ public class Market {
                     System.out.println("You can't buy spells!");
                 }
             }
+            else if(userChoice2 == 5)
+            {
+                System.out.println("For how many steps?");
+                int userChoice3 = scanner.nextInt();
+
+            }
         } else if (userChoice == 2) {
             System.out.println("What would you like to sell?");
             System.out.println("1. Potion");
             System.out.println("2. Weapon");
             System.out.println("3. Armor");
             System.out.println("4. Spell");
+            System.out.println("5. Nothing, I'm good.");
             int userChoice2 = scanner.nextInt();
             if (userChoice2 == 1) {
                 System.out.println("Which potion would you like to sell?");
@@ -189,6 +198,10 @@ public class Market {
                 thisHero.getArmors().remove(armor);
                 thisHero.gold += armor.cost;
                 System.out.println("You sold a " + armor.name + " for " + armor.cost);
+            }
+            else if (userChoice2 == 5)
+            {
+                System.out.println(PrettyPrint.RED+"Merchant"+PrettyPrint.RESET+" : Come back anytime!");
             }
         }
         else if(userChoice == 3){

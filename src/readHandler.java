@@ -5,6 +5,14 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
+/*
+These are used to read data from the `txt` files.
+They then store it in readHandler class.
+If anything fails, it calls `manualHandler`, which then makes ammends.
+@NOT: For me, `dragons.txt` failed, so I've called it via manualHandler, but only after trying it with readHandler.
+ */
+
 public class readHandler {
     private static final Logger logger = Logger.getLogger(readHandler.class.getName());
     static ArrayList<Characters.Hero> listOfPaladins = new ArrayList<>(); // heroes

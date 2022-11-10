@@ -79,7 +79,7 @@ public class Map {
     public Boolean promptBattle(Tile tile) {
         Random rand = new Random();
         int randNum = rand.nextInt(100);
-        if (tile.type == tileType.COMMON) {
+        if (tile.type == tileType.COMMON && !Repellent.isActive()) {
             return randNum % 2 == 0 && randNum > 50;
         } else {
             return false;

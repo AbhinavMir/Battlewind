@@ -1,7 +1,7 @@
 public class ManualHandler {
 
     /*
-    Things that don't work in one go have a backup handler
+    Things that don't work in one go have a backup handler. Use only if the first one doesn't work.
      */
 
     public static void loadDragonsManually()

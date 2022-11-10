@@ -10,7 +10,6 @@ sabhinav@bu.edu
 
 ---------------------------------------------------------------------------
 ### A brief description of each file and what it does
-
 `Battle.java` - A class to handle the battle between the hero and the monster. Can have one-to-one attack as chosen by user. A new instance is created when a battle is initiated in COMMON grounds. Local variable copies are maintained for speed
 
 `ManualHandler.java` - A fallback handler when the readHandler fails. Only use for suspected corrupt files.
@@ -30,269 +29,41 @@ sabhinav@bu.edu
 `itemClass.java` - Used to handle Item storage, inventory and such. Heavily extendible.
 
 ### Maps
-
 Every `Tile` has a few essential members such as type (enum), x co-ordinate and y co-ordinate. Another important aspect is the `isPlayer` boolean that let's the parser know if there are any players on current tile. `getTileImage()` -  Parses current tile and returns a certain way the tile is to be printed. The Map is then a 2D array of Tiles. This allows for extendibility and modularity. All maps are inherently randomized.
 
 ### Heroes
+All heroes are an extended subclass of the `Character` class. GameData stores an instance of chosen heroes. readHandler keeps an archive of all heroes. Heroes can call `attack()` and `spell()`. They can buy and sell in markets too. For simplicity, the spells are also stored here (in the Character superclass).
 
-All heroes are an extended subclass of the `Character` class.
+### Monsters
+All monsters are an extended subclass of the `Character` class. Every Battle instance stores a randomly chosen roster of Monsters (level matched) in local scope. They're destroyed after battle is over.
 
+### Item Class
+Stores all the potions, armours and weapons. Every instance of market and hero calls these things from here.
 
-14.	Antagonists Interface
-a.	Here is where the factory design pattern starts
-b.	Antagonists interface defines the interface for any villain of any game
-c.	Takes their basic information and provides it to the game
-15.	Protagonists Interface
-a.	Here is where the factory design pattern starts
-b.	Protagonists interface defines the interface for any hero of any game
-c.	Takes their basic information and provides it to the game
+### Read Handler and Manual Handler
+These are used to read data from the `txt` files. They then store it in readHandler class. If anything fails, it calls `manualHandler`, which then makes ammends. For me, `dragons.txt` failed, so I've called it via manualHandler, but only after trying it with readHandler.
 
-16.	Usable Interface
-a.	Here is where the factory design pattern starts
-b.	Usable interface defines the interface for any usable item of any game
-c.	Takes their basic information and provides it to the game
+### Market
+Markets are places where merchants sell and buy a bunch of things. Uses in-game currency called Gold. Each hero has a certain amount of Gold that they can use. Defeating a monster gets them some gold. Losing a hero means losing all their gold.
 
-17.	LorHeroes class
-a.	The heroes implementation
-b.	It extends the piece class and holds information for the pieces
-c.	It is also the main store in the object mapper factory pattern for monsters and hence implements Protagonists
-
-18.	LorMonsters class
-a.	The monsters implementation
-b.	It extends the piece class and holds information for the pieces
-c.	It is also the main store in the object mapper factory pattern for monsters and hence implements Antagonists
-
-19.	LorItems class
-a.	The potions/weapons/armours implementation
-b.	It extends the piece class and holds information for the pieces
-c.	It is also the main store in the object mapper factory pattern for monsters and hence implements Usable
-
-20.	LorSpells abstract class
-a.	The spells implementation
-b.	It extends the piece class and holds information for the pieces
-c.	It is also the main store in the object mapper factory pattern for spells
-
-
-21.	Game abstract Class
-a.	The actual game abstract class
-b.	This class just holds the skeleton of any game
-c.	It includes basic information of the game such as type, rules and maximum number of players
-d.	THis class is extended by our play class for our current purpose
-22.	Intro Class
-a.	Class generating the intro
-23.	Inventory Class
-a.	The main inventory of the game
-b.	Here all the purchased goods of heroes are stored apart from spells (Cuz spells don't go in the bag :p)
-
-
-
-
-24.	Learning Models Class
-a.	A special class unique to this game
-b.	This class allows changing of properties mid game
-c.	The game checks and learns what are the current stats of heroes to make the game less or more difficult
-d.	by building a story line around it.
-e.	Such as, if the heroes are too waeak, the game sets chances of battle to a lower value
-f.	allowing the heroes to take rest or go to a healer
-25.	Market Class
-a.	Main market class
-b.	This class decides the market, randomizes which market shows up
-c.	It allows sale and purchase of products
-d.	The functions of the class are self explanatory
-26.	Piece abstract class
-a.	Main piece class
-b.	THis class is something which is implemented by all our checkers in the game
-27.	Game Map class
-a.	Game Map class is the actual class which generates a map at the start of the game
-b.	The class is tasked with only the above function but has some work it has to do
-c.	It has to generate cells for markets, healers, blocked cells and normal cells in the ration of 2:2:1:5
-d.	These locations are randomly assigned one after the other so as to not overlap
-e.	A hashcode is generated for the coordinates to make sure that these locations generated do not overlap
-f.	When a player will step on a cell the coordinates for the cell stepped on will be hashed and sent here to get the exact cell
-g.	Once we have the cell we will get its properties from the map cell class
-h.	I have used hash map to make sure that constant time lookup is possible as we do not want the process to slow down
-i.	Please note that even though a hashmap is being used, you can assume it to be like a 2D matrix of size x*y as each (x,y) is hashed to form the lookup
-28.	Location Properties class
-a.	This class is used to give location properties as the enum which describes all available locations
-b.	Please note that to make my game Interesting I have made a healer location
-c.	A team member can only be healed at this location or else by using potions
-d.	The hashmap used in this class is again just for constant lookup while creating a location cell
-
-
-
-
-29.	LorMapCell class
-a.	The following class extends abstract Map cell, implements the set properties function
-b.	This class will also give the map cell specific properties which are only related to this game
-c.	Such as we shall be checking if a cell has been visited, if it is then fog of movement will be lifted (Check Readme to know what fog of movement is)
-d.	Further, if a market or blocked cell is present here then the properties of location will be written as required
-30.	Map Cell Abstract Class
-a.	Abstract Class MapCell is a class that can further be used for any game
-b.	It defines a cell for a specific map based on longitude (x) and latitude (y) properties
-c.	All games across the world breakdown maps to two intrinsic properties longitude and latitude
-d.	Further implementation of this abstract class can be used to add other properties.
-
-Singleton Classes
-31.	ClearScreen class
-a.	Singleton design pattern class which allows clearning of the console
-32.	Colors class
-a.	Class with static variables to give some color to the game
-33.	GenerateHash class
-a.	The following class is a singleton factory type design pattern class. It has only one static function
-b.	The use of this function is to generate a hashcode for coordinates
-c.	We use this hashcode to find properties of the cell which a player might enter into
-d.	More information on the same can be found in the Game Map class
-34.	HashHelpers Class
-a.	This class is a helper class
-b.	It helps in finding keys for values which are being used in hash maps
-c.	The requirement is only in specific cases where a value without key pair could exist
-35.	PrintStatements Class
-a.	Singleton class to print statements such as narrations and warnings
-b.	This class also prints the battle format
-36.	TakeInput Class
-a.	Singeton design pattern to use to take inputs
-b.	please note that here we also validate inputs to make sure correct things are entered
-37.	Waitfortime class
-a.	Singleton design pattern to use for waiting during iterations
-38.	Coordinate Class
-a.	Class containing coordinates of cells
-b.	This class is also used to hold the current coordinate of the player
-
-39.	Move Class
-a.	A class to make moves
-b.	It chooses a piece and sets its new x and y values based on the hashes
-40.	Movement Class
-a.	A class containing information on how to make moves
-b.	Also contains information on what hashes are stored and what hash to make next
-c.	Please note that this is of the form of a node with information of the next coordinate and the previous coordinate
-d.	It is implementation of a linked list
-41.	Map Objects Factory Class
-a.	The most important design patter being used by the game
-b.	The skeleton is built on this classes functionality
-c.	This uses factory design pattern to build the game
-
-d.	There are 3 main interfaces
-e.	Protagonists (Heroes) ---> LorHeroes (Implementation of protagonists for this specific game) ---> Paladins/Sorcerers/Warriors Mapper (Extension of Heroes)
-f.	Antagonists (Monsters/Villains) ---> LorMonsters (Implementation of antagonists for this specific game) ---> Dragons/Spirits/Skeletons (Extention of Monsters)
-g.	Usable --> LorItems & LorSpells (Implementation of usable in this game) ---> Potions, Weapons, Armours, Fire/ice/lightning spells (Extension)
-
-h.	All the above 3 are built in this factory of object mapper depending on the choice given in the method
-
-Menu Classes
-42.	Battle Menu Class
-a.	This class just builds a menu for the player during the battle
-43.	Game Difficulty Menu Class
-a.	This class sets the difficulty of the game
-b.	It sets the map size as well as goes on to decide the percentage of blocks
-44.	Hero Selection Menu Class
-a.	Hero selection menu is a special implementation of menu
-b.	This allows selection of heroes for the game
-c.	Gives a choice of the total number of players to use
-d.	Further allows choosing heroes and updates the same which is an intrinsic property of the Player class
-45.	Inventory Menu Class
-a.	The inventory menu has a few more functionalities other than just showing the menu
-b.	The class also displays a players inventory and allows basic selections of the items.
-c.	Seperate functions are used to achieve the above which are intrinsic properties of the Player
-
-46.	Limit Length Printer Singleton Class
-a.	This is a helper class
-b.	The class helps in formatting string according to requirements for better display
-47.	Menu Interface
-a.	Menu is an interface with just one function showMenu
-b.	Further this is implemented by different types of Menus
-48.	Next Choice Menu
-a.	This is a class implementing menu for next choices to be displayed
-49.	LorPlayer Class
-a.	This class extends the Player class and builds the actual player for the game
-b.	The player is the main collection of heroes hence holds an object of type LorHeroes
-c.	Further the player has a coordinate location and a boolean putting them in battle
-50.	Player Class
-a.	Actual player class
-b.	This class is for a basic player which takes their basic details such as name and stores a state and game score for them
-c.	For this game we shall only be extending this class and not using it completely
-51.	Bank Class
-a.	Main bank class
-52.	LorBank Class
-a.	Bank for holding the player amounts
-
-
-At all points game is handled via while loops to start games and return back in case of replay. Validations are made to check all inputs and in case of illegal inputs
-validator breaks the game and exits. Only in case of out of bound inputs players are given a chance to re-enter values as they are generic errors which do not break process.
+### Battle
+Can have directed attacks/spells towards a certain monster. Individual heroes can die too. Winning gets every hero certain amount of experience based on level of involvement.
 
 ## Notes
 ---------------------------------------------------------------------------
-1. <Files to be parsed should be stored in ConfigFiles, for parser class to
-read class>
+1. Files to be parsed should be stored in gameUtils, for parser class to
+read class
 
-2. <Bonus Done>
+2. #### Bonus Done
 
-	- Learning System for deciding when to give enemies 
-	- probability of fighting an enemy reduces based on health of players
-	- healers added to the game to heal players
-	- rest power added to regenrate health
-	- design patterns implmented
-	- Story added to the game
-	- Learning system for health and fighting
-	- learning system for dodging, using the same capability makes dodging easier (such as spells and without weapon attacks)
-	- Map size can be changed by requirement
+	- Probability of encountering an enemy reduces if hero has a repelling item
+	- Prettified printing
+	- Data read from txt
+	- Map size modifiable
+
+### Rules
 
 
-Health of Hero is based on Different parameters
-
-1. If Hero is of lower level (level < 10)
-Health = Strength + Level * 500
-2. If Hero is of level between 10 and 20
-Health = Strength + Level * 400
-3. If Hero is of level between 20 and 30
-Health = Strength + Level * 350
-4. If Hero is of level more than 30
-Health = Strength + Level * 300
-
-Mana of Hero is based on their Dexterity
-
-Mana = Dexterity * 2
-
-Sorcerers have higher mana to use more spells than other types
-
-Chance of getting a battle
-
-Chance of getting a battle changes through the game based on the heroes health and the number of battles they fight
-
-1. If they have fought many battles then the chance of getting a battle reduces by 0.1 for every battle
-2. Once battle stat reaches 0.2 it resets to original of 0.7 (70% chance of a battle)
-3. If the heroes are too weak (Total health less than 70%) then the chance of a battle is 0.5 (50%)
-4. If heroes get weaker where their total health goes below 50% chance of battle reduces further to 0.3
-5. If the heroes are very weak which is their health is less than 10% of their total health then chance of battle reduces to 0 until they get their health regenerated
-
-Dodge chance
-
-Chance of dodge is dependent on the capabilities of the fighter
-
-Chance of dodge = (attack power - dodge capability/agility)/(attack power + dodge capability/agility)
-
-If the chance of dodging is too high then the player is given a warning asking them to use a weapon or potion to increase their stats as the enemy would be doging most of their attacks
-and chance of dodge is set to a 50% chance 
-Spells cannot be dodged 
-
-Player can put on more than one armour and the defence increases by the total
-Player can equip/dequip weapons and armours based on their level and available hands
-
-Player can use potions, equip items, dequip items etc at any point of time even between battles 
-
-More number of heroes more number of monsters with better stats causing more stronger battles. hence choose lesser players to have an easy game :p
-
-While building the map first markets are placed at random spaces followed by healers followed by blocked regions and then the rest of the normal regions
-
-Please note that with this process and choice of statistics it will never happen that the player will be blocked to move as the numbers and pipeline of building cells is made in such a way
-In the worst case (This will never arise the player cannot move and the map is unplayable they can click on restart to regenerate a new map). 
-
-
-3. <Notes to grader>
-    - Game shows information for playing in the terminal, same has been included in the Game Example Section
-    - Please note that pauses in the game are not an efficiency problem but deliberately added to create an effect for the UI
-        - Clearing screen has an added pause of a few seconds
-        - Text displaying has an added pause to give a better look and feel
-    - Chance of stat document includes all the functions used for data.
 
 ## How to compile and run
 ---------------------------------------------------------------------------
