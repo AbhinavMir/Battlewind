@@ -63,13 +63,14 @@ public class Battle {
     }
 
     public void attack(Characters.Hero hero, Characters.Monster monster) {
+        int damage;
         if (hero.getWeapons().size() > 0) {
-
+            damage = hero.getWeapons().get(0).damage + hero.getBaseDamage();
         } else {
-            int damage = hero.getBaseDamage();
-            int monsterHp = monster.getCurrentHp();
-            monster.setCurrentHp(monsterHp - damage);
+            damage = hero.getBaseDamage();
         }
+        int monsterHp = monster.getCurrentHp();
+        monster.setCurrentHp(monsterHp - damage);
     }
 
     public void spell(Characters.Hero hero, Characters.Monster monster, Characters.Spell spell) {

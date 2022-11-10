@@ -8,11 +8,11 @@ public class Characters {
     int currentHp;
     int baseDamage;
 
-    public Characters(String name, int level, int exp, int hp, int baseDamage) {
+    public Characters(String name, int level, int exp, int baseDamage) {
         this.name = name;
         this.level = level;
         this.exp = exp;
-        this.hp = hp;
+        this.hp = 100*level;
         this.baseDamage = baseDamage;
     }
 
@@ -80,7 +80,7 @@ public class Characters {
         int dodgeChance;
 
         public Monster(String name, int level, int damage, int exp, int hp, int baseDamage, int dodgeChance) {
-            super(name, level, exp, hp, baseDamage);
+            super(name, level, exp, baseDamage);
             this.damage = damage;
             this.dodgeChance = dodgeChance;
         }
@@ -173,7 +173,7 @@ public class Characters {
         ArrayList<Weapon> weapons = new ArrayList<>();
         ArrayList<Armor> armors = new ArrayList<>();
         public Hero(String name, int mana, int strength, int agility, int dexterity, int startingMoney, int startingExperience, heroType type, int hp, int baseDamage) {
-            super(name, 0, startingExperience, hp, baseDamage);
+            super(name, 0, startingExperience, baseDamage);
             this.mana = mana;
             this.type = type;
             this.defense = 0;
@@ -188,7 +188,7 @@ public class Characters {
         }
 
         public Hero(String name, int mana, int strength, int agility, int dexterity, int startingMoney, int startingExp, heroType type) {
-            super(name, 0, startingExp, 0, 0);
+            super(name, 0, startingExp, strength);
             this.mana = mana;
             this.type = type;
             this.startingMoney = startingMoney;
