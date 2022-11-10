@@ -282,7 +282,7 @@ public class readHandler {
         ManualHandler.loadFireSpells();
         ManualHandler.loadIceSpellsManually();
         ManualHandler.loadPotionsManually();
-        readWeapons(weapons);
+        ManualHandler.loadWeaponsManually();
         readArmors(armors);
     }
 

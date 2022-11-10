@@ -63,20 +63,29 @@ public class Battle {
 
         // print out your party
         System.out.println("Your party:");
-        ArrayList<Characters.Hero> heroesInPlay = new ArrayList<Characters.Hero>();
-        for (int i = 0; i < this.numHeroes; i++) {
-            heroesInPlay.add(gameData.getHero(i));
-        }
         gameData.printAllHeroes();
+        ArrayList<Characters.Hero> heroesInPlay = gameData.heroes;
         int turnCounter = 0;
         int numHeroes = heroesInPlay.size();
         Characters.Hero currentHero;
         int choice2;
         while (true) {
             currentHero = heroesInPlay.get(turnCounter % numHeroes);
-            System.out.println("What would" + heroesInPlay.get(turnCounter % numHeroes).getName() + "like to do?");
+            System.out.println("What would " + heroesInPlay.get(turnCounter % numHeroes).getName() + " like to do?");
             System.out.println("1. Attack\n2. Use Spell\n3. Use Potion\n4. Change equipment");
-            choice = scanner.nextInt();
+            while (true) {
+                try {
+                    choice = scanner.nextInt();
+                    break;
+                } catch (Exception e) {
+                    System.out.println("Please enter a valid choice");
+                }
+            }
+
+            while (choice < 1 || choice > 4) {
+                System.out.println("Please enter an acceptable option");
+                choice = scanner.nextInt();
+            }
             if (choice == 1) {
                 System.out.println("Which monster would you like to attack?");
                 for (int i = 0; i < this.getMonsters().size(); i++) {
@@ -109,24 +118,19 @@ public class Battle {
                 } else if (allMonstersDead()) {
                     System.out.println("You've won the battle!");
                     System.exit(0);
-                }
-                else if(choice == 3)
-                {
+                } else if (choice == 3) {
                     System.out.println("Which potion would you like to use?");
                     for (int i = 0; i < currentHero.getPotions().size(); i++) {
                         System.out.println(i + ". " + currentHero.getPotions().get(i).name);
                     }
                     choice2 = scanner.nextInt();
                     Potion potion = currentHero.getPotions().get(choice2);
-                    potion.usePotion(currentHero,potion);
-                }
-                else if(choice == 4)
-                {
+                    potion.usePotion(currentHero, potion);
+                } else if (choice == 4) {
                     System.out.println("Which equipment would you like to change?");
                     System.out.println("1. Weapon\n2. Armor");
                     choice2 = scanner.nextInt();
-                    if(choice2 == 1)
-                    {
+                    if (choice2 == 1) {
                         System.out.println("Which weapon would you like to equip?");
                         for (int i = 0; i < currentHero.getWeapons().size(); i++) {
                             System.out.println(i + ". " + currentHero.getWeapons().get(i).name);
@@ -134,9 +138,7 @@ public class Battle {
                         choice2 = scanner.nextInt();
                         Weapon weapon = currentHero.getWeapons().get(choice2);
                         currentHero.setWeapon(weapon);
-                    }
-                    else if(choice2 == 2)
-                    {
+                    } else if (choice2 == 2) {
                         System.out.println("Which armor would you like to equip?");
                         for (int i = 0; i < currentHero.getArmors().size(); i++) {
                             System.out.println(i + ". " + currentHero.getArmors().get(i).name);

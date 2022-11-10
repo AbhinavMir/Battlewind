@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 class itemClass {
 }
 
+// Parent class for all items
 class itemBaseClass {
 
     String name;
@@ -19,6 +20,7 @@ class itemBaseClass {
     }
 }
 
+// Repellent class to repel monsters, buy it from your nearest market today!
 class Repellent {
     static boolean active = false;
     static Timestamp time = new Timestamp(System.currentTimeMillis());
@@ -40,6 +42,7 @@ class Repellent {
     }
 }
 
+// Weapon class as a child of itemBaseClass
 class Weapon extends itemBaseClass {
     int damage;
     int requiredHands;
@@ -51,6 +54,7 @@ class Weapon extends itemBaseClass {
     }
 }
 
+// Armor Class to handle potion stuff
 class Armor extends itemBaseClass {
     int damageReduction;
 
@@ -60,13 +64,10 @@ class Armor extends itemBaseClass {
     }
 }
 
+// Potion Class to handle potion stuff
 class Potion extends itemBaseClass {
     int attributeIncrease;
     String attributeAffected;
-
-    {
-        System.out.println("You are not high enough level to use this item.");
-    }
 
     public Potion(String name, int cost, int requiredLevel, int attributeIncrease, String attributeAffected) {
         super(name, cost, requiredLevel);

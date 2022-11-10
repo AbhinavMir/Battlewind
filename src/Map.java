@@ -2,6 +2,16 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.logging.*;
 
+/*
+Every `Tile` has a few essential members such as type (enum),
+x co-ordinate and y co-ordinate. Another important aspect is
+the `isPlayer` boolean that let's the parser know if there are
+any players on current tile. `getTileImage()` -  Parses current
+tile and returns a certain way the tile is to be printed.
+The Map is then a 2D array of Tiles.
+This allows for extendibility and modularity. All maps are inherently randomized.
+ */
+
 public class Map {
     String helpString = "";
     Scanner scanner = new Scanner(System.in);
@@ -221,6 +231,7 @@ public class Map {
         INACCESSIBLE, MARKET, COMMON
     }
 
+    // Tile class for the map
     class Tile {
         tileType type;
         int x;
