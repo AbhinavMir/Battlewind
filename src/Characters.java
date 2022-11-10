@@ -12,7 +12,7 @@ public class Characters {
         this.name = name;
         this.level = level;
         this.exp = exp;
-        this.hp = 100*level;
+        this.hp = 100 * level;
         this.baseDamage = baseDamage;
     }
 
@@ -168,10 +168,13 @@ public class Characters {
         int y;
         heroType type;
         int dodgeChance;
+        Weapon weapon;
+        Armor armor;
         ArrayList<Spell> spells = new ArrayList<>();
         ArrayList<Potion> potions = new ArrayList<>();
         ArrayList<Weapon> weapons = new ArrayList<>();
         ArrayList<Armor> armors = new ArrayList<>();
+
         public Hero(String name, int mana, int strength, int agility, int dexterity, int startingMoney, int startingExperience, heroType type, int hp, int baseDamage) {
             super(name, 0, startingExperience, baseDamage);
             this.mana = mana;
@@ -183,6 +186,7 @@ public class Characters {
             this.dexterity = dexterity;
             this.agility = agility;
         }
+
         public Hero() {
             super();
         }
@@ -196,6 +200,30 @@ public class Characters {
             this.strength = strength;
             this.dexterity = dexterity;
             this.agility = agility;
+        }
+
+        public Weapon getWeapon() {
+            return weapon;
+        }
+
+        public void setWeapon(Weapon weapon) {
+            this.weapon = weapon;
+        }
+
+        public void removeWeapon() {
+            this.weapon = null;
+        }
+
+        public Armor getArmor() {
+            return armor;
+        }
+
+        public void setArmor(Armor armor) {
+            this.armor = armor;
+        }
+
+        public void removeArmor() {
+            this.armor = null;
         }
 
         public int getDodgeChance() {

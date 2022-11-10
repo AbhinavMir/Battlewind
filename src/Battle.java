@@ -74,15 +74,19 @@ public class Battle {
     }
 
     public void spell(Characters.Hero hero, Characters.Monster monster, Characters.Spell spell) {
-        if (hero.type == Characters.Hero.heroType.SORCERER || hero.type == Characters.Hero.heroType.PALADIN) {
-            //𝑠𝑝𝑒𝑙𝑙_𝑏𝑎𝑠𝑒_𝑑𝑎𝑚𝑎𝑔𝑒 + (
-            //𝑑𝑒𝑥𝑡𝑒𝑟𝑖𝑡𝑦
-            //10000 ) × 𝑠𝑝𝑒𝑙𝑙_𝑏𝑎𝑠𝑒_𝑑𝑎𝑚𝑎𝑔�
-            int damage = spell.damage + (hero.dexterity / 10000 * spell.damage);
-            int monsterHp = monster.getCurrentHp();
-            monster.setCurrentHp(monsterHp - damage);
+        if (hero.getMp() > spell.manaCost) {
+            if (hero.type == Characters.Hero.heroType.SORCERER || hero.type == Characters.Hero.heroType.PALADIN) {
+                //𝑠𝑝𝑒𝑙𝑙_𝑏𝑎𝑠𝑒_𝑑𝑎𝑚𝑎𝑔𝑒 + (
+                //𝑑𝑒𝑥𝑡𝑒𝑟𝑖𝑡𝑦
+                //10000 ) × 𝑠𝑝𝑒𝑙𝑙_𝑏𝑎𝑠𝑒_𝑑𝑎𝑚𝑎𝑔�
+                int damage = spell.damage + (hero.dexterity / 10000 * spell.damage);
+                int monsterHp = monster.getCurrentHp();
+                monster.setCurrentHp(monsterHp - damage);
+            } else {
+                System.out.println("You can't cast spells!");
+            }
         } else {
-            System.out.println("You can't cast spells!");
+            System.out.println("You don't have enough mana!");
         }
     }
 
@@ -109,5 +113,21 @@ public class Battle {
             int heroDexterity = hero.getDexterity();
             hero.setDexterity(heroDexterity + amount);
         }
+        else if(attributeAffected.equals("All Health/Mana/Strength/Dexterity/Defense/Agility"))
+        {
+            int heroHp = hero.getCurrentHp();
+            hero.setCurrentHp(heroHp + amount);
+            int heroMp = hero.getMp();
+            hero.setMp(heroMp + amount);
+            int heroDamage = hero.getBaseDamage();
+            hero.setBaseDamage(heroDamage + amount);
+            int heroDodge = hero.getDodgeChance();
+            hero.setDodgeChance(heroDodge + amount);
+            int heroDefense = hero.getDefense();
+            hero.setDefense(heroDefense + amount);
+            int heroDexterity = hero.getDexterity();
+            hero.setDexterity(heroDexterity + amount);
+        }
     }
+
 }
