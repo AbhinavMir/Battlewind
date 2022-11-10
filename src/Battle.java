@@ -119,6 +119,32 @@ public class Battle {
                     Potion potion = currentHero.getPotions().get(choice2);
                     potion.usePotion(currentHero,potion);
                 }
+                else if(choice == 4)
+                {
+                    System.out.println("Which equipment would you like to change?");
+                    System.out.println("1. Weapon\n2. Armor");
+                    choice2 = scanner.nextInt();
+                    if(choice2 == 1)
+                    {
+                        System.out.println("Which weapon would you like to equip?");
+                        for (int i = 0; i < currentHero.getWeapons().size(); i++) {
+                            System.out.println(i + ". " + currentHero.getWeapons().get(i).name);
+                        }
+                        choice2 = scanner.nextInt();
+                        Weapon weapon = currentHero.getWeapons().get(choice2);
+                        currentHero.setWeapon(weapon);
+                    }
+                    else if(choice2 == 2)
+                    {
+                        System.out.println("Which armor would you like to equip?");
+                        for (int i = 0; i < currentHero.getArmors().size(); i++) {
+                            System.out.println(i + ". " + currentHero.getArmors().get(i).name);
+                        }
+                        choice2 = scanner.nextInt();
+                        Armor armor = currentHero.getArmors().get(choice2);
+                        currentHero.setArmor(armor);
+                    }
+                }
             }
         }
     }
