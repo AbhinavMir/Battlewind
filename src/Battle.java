@@ -90,10 +90,32 @@ public class Battle {
                     System.out.println("You've won the battle!");
                     System.exit(0);
                 }
-            }
-            else if (choice == 2)
-            {
-
+            } else if (choice == 2) {
+                System.out.println("Which spell would you like to use?");
+                for (int i = 0; i < currentHero.getSpells().size(); i++) {
+                    System.out.println(i + ". " + currentHero.getSpells().get(i).name);
+                }
+                choice2 = scanner.nextInt();
+                System.out.println("Which monster would you like to attack?");
+                for (int i = 0; i < this.getMonsters().size(); i++) {
+                    System.out.println(i + ". " + this.getMonsters().get(i).getName());
+                }
+                choice2 = scanner.nextInt();
+                spell(currentHero, this.getMonsters().get(choice2), currentHero.getSpells().get(choice2));
+                if (allHeroesDead()) {
+                    System.out.println("You've lost the battle!");
+                    System.exit(0);
+                } else if (allMonstersDead()) {
+                    System.out.println("You've won the battle!");
+                    System.exit(0);
+                }
+                else if(choice == 3)
+                {
+                    System.out.println("Which potion would you like to use?");
+                    for (int i = 0; i < currentHero.getPotions().size(); i++) {
+                        System.out.println(i + ". " + currentHero.getPotions().get(i).name);
+                    }
+                }
             }
         }
     }
