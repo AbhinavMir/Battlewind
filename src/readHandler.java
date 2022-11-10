@@ -179,7 +179,6 @@ public class readHandler {
 
         return null;
     }
-
     public static String[] getAllFiles(String path) {
         String[] allDirs;
         File folder = new File(path);

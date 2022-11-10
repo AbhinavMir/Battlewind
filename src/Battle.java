@@ -1,3 +1,6 @@
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -59,26 +62,80 @@ public class Battle {
 
         // print out your party
         System.out.println("Your party:");
+        ArrayList<Characters.Hero> heroesInPlay = new ArrayList<Characters.Hero>();
+        for (int i = 0; i < this.numHeroes; i++) {
+            heroesInPlay.add(gameData.getHero(i));
+        }
         gameData.printAllHeroes();
+        int turnCounter = 0;
+        int numHeroes = heroesInPlay.size();
+        Characters.Hero currentHero;
+        int choice2;
+        while (true) {
+            currentHero = heroesInPlay.get(turnCounter % numHeroes);
+            System.out.println("What would" + heroesInPlay.get(turnCounter % numHeroes).getName() + "like to do?");
+            System.out.println("1. Attack\n2. Use Spell\n3. Use Potion\n4. Change equipment");
+            choice = scanner.nextInt();
+            if (choice == 1) {
+                System.out.println("Which monster would you like to attack?");
+                for (int i = 0; i < this.getMonsters().size(); i++) {
+                    System.out.println(i + ". " + this.getMonsters().get(i).getName());
+                }
+                choice2 = scanner.nextInt();
+                attack(currentHero, this.getMonsters().get(choice2));
+                if (allHeroesDead()) {
+                    System.out.println("You've lost the battle!");
+                    System.exit(0);
+                } else if (allMonstersDead()) {
+                    System.out.println("You've won the battle!");
+                    System.exit(0);
+                }
+            }
+            else if (choice == 2)
+            {
+
+            }
+        }
     }
 
     public void attack(Characters.Hero hero, Characters.Monster monster) {
         int damage;
-        if (hero.getWeapons().size() > 0) {
-            damage = hero.getWeapons().get(0).damage + hero.getBaseDamage();
-        } else {
-            damage = hero.getBaseDamage();
+        try {
+            if (hero.getWeapons().size() > 0) {
+                damage = hero.getWeapons().get(0).damage + hero.getBaseDamage();
+            } else {
+                damage = hero.getBaseDamage();
+            }
+            int monsterHp = monster.getCurrentHp();
+            monster.setCurrentHp(monsterHp - damage);
+        } catch (Exception e) {
+            System.out.println("You cannot perform this attack!");
         }
-        int monsterHp = monster.getCurrentHp();
-        monster.setCurrentHp(monsterHp - damage);
+    }
+
+    public Boolean allHeroesDead() {
+        int numHeroes = gameData.heroes.size();
+        int numDeadHeroes = 0;
+        for (int i = 0; i < numHeroes; i++) {
+            if (gameData.heroes.get(i).getCurrentHp() <= 0) {
+                numDeadHeroes++;
+            }
+        }
+        return numDeadHeroes == numHeroes;
+    }
+
+    public Boolean allMonstersDead() {
+        for (int i = 0; i < this.getMonsters().size(); i++) {
+            if (this.getMonsters().get(i).getCurrentHp() > 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void spell(Characters.Hero hero, Characters.Monster monster, Characters.Spell spell) {
         if (hero.getMp() > spell.manaCost) {
             if (hero.type == Characters.Hero.heroType.SORCERER || hero.type == Characters.Hero.heroType.PALADIN) {
-                //𝑠𝑝𝑒𝑙𝑙_𝑏𝑎𝑠𝑒_𝑑𝑎𝑚𝑎𝑔𝑒 + (
-                //𝑑𝑒𝑥𝑡𝑒𝑟𝑖𝑡𝑦
-                //10000 ) × 𝑠𝑝𝑒𝑙𝑙_𝑏𝑎𝑠𝑒_𝑑𝑎𝑚𝑎𝑔�
                 int damage = spell.damage + (hero.dexterity / 10000 * spell.damage);
                 int monsterHp = monster.getCurrentHp();
                 monster.setCurrentHp(monsterHp - damage);
@@ -87,46 +144,6 @@ public class Battle {
             }
         } else {
             System.out.println("You don't have enough mana!");
-        }
-    }
-
-    public void usePotion(Characters.Hero hero, Potion potion) {
-        String attributeAffected = potion.attributeAffected;
-        int amount = potion.attributeIncrease;
-        // Health/Mana/Strength/Dexterity/Defense/Agility
-        if (attributeAffected == "Health") {
-            int heroHp = hero.getCurrentHp();
-            hero.setCurrentHp(heroHp + amount);
-        } else if (attributeAffected == "Mana") {
-            int heroMp = hero.getMp();
-            hero.setMp(heroMp + amount);
-        } else if (attributeAffected == "Strength") {
-            int heroDamage = hero.getBaseDamage();
-            hero.setBaseDamage(heroDamage + amount);
-        } else if (attributeAffected == "Agility") {
-            int heroDodge = hero.getDodgeChance();
-            hero.setDodgeChance(heroDodge + amount);
-        } else if (attributeAffected == "Defense") {
-            int heroDefense = hero.getDefense();
-            hero.setDefense(heroDefense + amount);
-        } else if (attributeAffected == "Dexterity") {
-            int heroDexterity = hero.getDexterity();
-            hero.setDexterity(heroDexterity + amount);
-        }
-        else if(attributeAffected.equals("All Health/Mana/Strength/Dexterity/Defense/Agility"))
-        {
-            int heroHp = hero.getCurrentHp();
-            hero.setCurrentHp(heroHp + amount);
-            int heroMp = hero.getMp();
-            hero.setMp(heroMp + amount);
-            int heroDamage = hero.getBaseDamage();
-            hero.setBaseDamage(heroDamage + amount);
-            int heroDodge = hero.getDodgeChance();
-            hero.setDodgeChance(heroDodge + amount);
-            int heroDefense = hero.getDefense();
-            hero.setDefense(heroDefense + amount);
-            int heroDexterity = hero.getDexterity();
-            hero.setDexterity(heroDexterity + amount);
         }
     }
 
