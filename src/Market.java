@@ -186,6 +186,9 @@ public class Market {
                 System.out.println("You sold a " + armor.name + " for " + armor.cost);
             }
         }
+        else if(userChoice == 3){
+            System.out.println("You left the shop.");
+        }
     }
 
     public static void main(String[] args) {

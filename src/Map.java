@@ -17,7 +17,7 @@ public class Map {
     public static void run() {
         PrettyPrint pp = new PrettyPrint();
         readHandler.init();
-        Map map = new Map(1, 10, 10);
+        Map map = new Map(238957, 10, 10);
         map.initializeMap();
         System.out.println(map.printMap());
         Scanner scanner = new Scanner(System.in);
@@ -59,18 +59,20 @@ public class Map {
     public String tileImage(Tile tile) {
         tileType type = tile.type;
         String toReturn = "";
-        if (type == tileType.COMMON) {
-            toReturn = "" + PrettyPrint.GREEN_BACKGROUND + "   " + PrettyPrint.RESET + "";
-        } else if (type == tileType.INACCESSIBLE) {
-            toReturn = "" + PrettyPrint.RED_BACKGROUND + "   " + PrettyPrint.RESET + "";
-        } else if (type == tileType.MARKET) {
-            toReturn = "" + PrettyPrint.BLUE_BACKGROUND + "(M)" + PrettyPrint.RESET + "";
-        }
 
         if (tile.isPlayer) {
             toReturn = "" + PrettyPrint.YELLOW_BACKGROUND + "YOU" + PrettyPrint.RESET + "";
+        } else {
+            if (tile.isPlayer) {
+            }
+            if (type == tileType.COMMON) {
+                toReturn = "" + PrettyPrint.GREEN_BACKGROUND + "   " + PrettyPrint.RESET + "";
+            } else if (type == tileType.INACCESSIBLE) {
+                toReturn = "" + PrettyPrint.RED_BACKGROUND + "   " + PrettyPrint.RESET + "";
+            } else if (type == tileType.MARKET) {
+                toReturn = "" + PrettyPrint.BLUE_BACKGROUND + "(M)" + PrettyPrint.RESET + "";
+            }
         }
-
         return toReturn;
     }
 
@@ -131,6 +133,8 @@ public class Map {
                     map[x_current + 1][y_current].isPlayer = true;
                 }
             } else if (map[x_current + 1][y_current].type == tileType.MARKET) {
+                map[x_current][y_current].isPlayer = false;
+                map[x_current + 1][y_current].isPlayer = true;
                 Market.prompt();
             }
         } else if (move.equals("d")) {
@@ -148,46 +152,32 @@ public class Map {
                     Market.prompt();
                 }
             }
-        }
-        else if(move.equals("i"))
-        {
+        } else if (move.equals("i")) {
             int whichHero = scanner.nextInt();
             gameData.printAllHeroes();
             System.out.println("0: Print entire inventory of party");
-            if(whichHero!=0){Characters.Player.viewInventory(gameData.heroes.get(whichHero));}
-            else if(whichHero==0)
-            {
+            if (whichHero != 0) {
+                Characters.Player.viewInventory(gameData.heroes.get(whichHero));
+            } else if (whichHero == 0) {
                 for (int i = 0; i < gameData.heroes.size(); i++) {
                     Characters.Player.viewInventory(gameData.heroes.get(i));
                 }
-            }
-            else {
+            } else {
                 System.out.println("Invalid input");
             }
-        }
-        else if (move.equals("p"))
-        {
+        } else if (move.equals("p")) {
             gameData.printAllHeroes();
-        }
-        else if (move.equals("q"))
-        {
+        } else if (move.equals("q")) {
             System.out.println("Are you sure? You'll lose all progress!");
             String sure = scanner.next();
-            if(sure.equals("y"))
-            {
+            if (sure.equals("y")) {
                 System.exit(0);
             }
-        }
-        else if(move.equals("m"))
-        {
+        } else if (move.equals("m")) {
             printMap();
-        }
-        else if(move.equals("h"))
-        {
+        } else if (move.equals("h")) {
             System.out.println(helpString);
-        }
-        else
-        {
+        } else {
             System.out.println("Invalid input");
         }
     }
