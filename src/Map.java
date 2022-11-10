@@ -14,25 +14,26 @@ public class Map {
         populateMap(seed, x, y);
     }
 
-    public static void run() {
+    public static void run(Map map) {
         PrettyPrint pp = new PrettyPrint();
         readHandler.init();
-        Map map = new Map(238957, 10, 10);
         map.initializeMap();
         System.out.println(map.printMap());
         Scanner scanner = new Scanner(System.in);
         while (true) {
+            System.out.println("W - Move Up \t S - Move Down \t A - Move Left \t D - Move Right \t H - Help \t I - Inventory \t Q - Quit");
             // System.out.println("Hero is at " + map.getPlayerPosition()[0] + " " + map.getPlayerPosition()[1]);
             String move = scanner.nextLine();
-            map.movePlayerOnMap(move);
-            System.out.println(map.printMap());
+            if (move != null) {
+                map.movePlayerOnMap(move);
+                System.out.println(map.printMap());
+            } else {
+                move = scanner.nextLine();
+            }
             // pp.clearScreen();
         }
     }
 
-    public static void main(String[] args) {
-        run();
-    }
 
     public void initializeMap() {
         this.map[0][0].isPlayer = true;
@@ -79,7 +80,7 @@ public class Map {
     public Boolean promptBattle(Tile tile) {
         Random rand = new Random();
         int randNum = rand.nextInt(100);
-        if (tile.type == tileType.COMMON && !Repellent.isActive()) {
+        if (tile.type == tileType.COMMON) {
             return randNum % 2 == 0 && randNum > 50;
         } else {
             return false;
@@ -103,7 +104,9 @@ public class Map {
                     map[x_current - 1][y_current].isPlayer = true;
                 }
             } else if (map[x_current - 1][y_current].type == tileType.MARKET) {
-                Market.prompt();
+                map[x_current][y_current].isPlayer = false;
+                map[x_current - 1][y_current].isPlayer = true;
+                Market.prePrompt(scanner);
             }
         } else if (move.equals("a")) {
             if (y_current == 0 || map[x_current][y_current - 1].type == tileType.INACCESSIBLE) {
@@ -118,7 +121,10 @@ public class Map {
                     map[x_current][y_current - 1].isPlayer = true;
                 }
             } else if (map[x_current][y_current - 1].type == tileType.MARKET) {
-                Market.prompt();
+                map[x_current][y_current].isPlayer = false;
+                map[x_current][y_current - 1].isPlayer = true;
+                Market.prePrompt(scanner);
+
             }
         } else if (move.equals("s")) {
             if (x_current == map.length - 1 || map[x_current + 1][y_current].type == tileType.INACCESSIBLE) {
@@ -135,7 +141,7 @@ public class Map {
             } else if (map[x_current + 1][y_current].type == tileType.MARKET) {
                 map[x_current][y_current].isPlayer = false;
                 map[x_current + 1][y_current].isPlayer = true;
-                Market.prompt();
+                Market.prePrompt(scanner);
             }
         } else if (move.equals("d")) {
             if (y_current == map[0].length - 1 || map[x_current][y_current + 1].type == tileType.INACCESSIBLE) {
@@ -149,7 +155,9 @@ public class Map {
                     map[x_current][y_current].isPlayer = false;
                     map[x_current][y_current + 1].isPlayer = true;
                 } else if (map[x_current][y_current + 1].type == tileType.MARKET) {
-                    Market.prompt();
+                    map[x_current][y_current].isPlayer = false;
+                    map[x_current][y_current + 1].isPlayer = true;
+                    Market.prePrompt(scanner);
                 }
             }
         } else if (move.equals("i")) {

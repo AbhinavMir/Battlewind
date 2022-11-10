@@ -65,6 +65,6 @@ public class Launcher {
 
         System.out.println("Your team:");
         gameData.printAllHeroes();
-        map.run();
+        map.run(map);
     }
 }

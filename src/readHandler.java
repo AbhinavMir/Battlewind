@@ -80,6 +80,39 @@ public class readHandler {
         }
     }
 
+    public static void readWeapons(String weaponData) {
+        String keys = "Name/cost/level/damage/required hands";
+        weaponData = weaponData.replace(keys, "");
+        weaponData = weaponData.replaceFirst(" ", "");
+        String[] weaponDataArray = weaponData.split(" +");
+        int weaponNum = weaponDataArray.length / 5;
+        for (int i = 0; i < weaponNum; i++) {
+            String name = weaponDataArray[i * 5];
+            int cost = Integer.parseInt(weaponDataArray[i * 5 + 1]);
+            int requiredLevel = Integer.parseInt(weaponDataArray[i * 5 + 2]);
+            int damage = Integer.parseInt(weaponDataArray[i * 5 + 3]);
+            int requiredHands = Integer.parseInt(weaponDataArray[i * 5 + 4]);
+            Weapon weapon = new Weapon(name, cost, requiredLevel, damage, requiredHands);
+            listOfWeapons.add(weapon);
+        }
+    }
+
+    public static void readArmors(String armorData) {
+        String keys = "Name/cost/required level/damage reduction";
+        armorData = armorData.replace(keys, "");
+        armorData = armorData.replaceFirst(" ", "");
+        String[] armorDataArray = armorData.split(" +");
+        int armorNum = armorDataArray.length / 5;
+        for (int i = 0; i < armorNum; i++) {
+            String name = armorDataArray[i * 4];
+            int cost = Integer.parseInt(armorDataArray[i * 4 + 1]);
+            int requiredLevel = Integer.parseInt(armorDataArray[i * 4 + 2]);
+            int damageReduction = Integer.parseInt(armorDataArray[i * 4 + 3]);
+            Armor armor = new Armor(name, cost, requiredLevel, damageReduction);
+            listOfArmors.add(armor);
+        }
+    }
+
     public static void readHeroes(String heroData, Characters.Hero.heroType type) {
         String keys = "Name/mana/strength/agility/dexterity/starting money/starting experience";
         // remove Name/mana/strength/agility/dexterity/starting money/starting experience from heroData using replace
@@ -232,7 +265,12 @@ public class readHandler {
         String spirits = readThisFiles("gameUtils/", "Spirits");
         String exoskeletons = readThisFiles("gameUtils/", "Exoskeletons");
         String dragons = readThisFiles("gameUtils/", "Dragons");
+        String potions = readThisFiles("gameUtils/", "Potions");
+        String lightningSpells = readThisFiles("gameUtils/", "LightningSpells");
+        String fireSpells = readThisFiles("gameUtils/", "FireSpells");
+        String iceSpells = readThisFiles("gameUtils/", "IceSpells");
         readHeroes(paladins, Characters.Hero.heroType.PALADIN);
+        readPotions(potions);
         logger.info("Paladins loaded");
         readHeroes(sorcerers, Characters.Hero.heroType.SORCERER);
         logger.info("Sorcerers loaded");
