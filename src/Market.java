@@ -46,7 +46,7 @@ public class Market {
             gameData.printAllHeroes();
             int heroChoice = 0;
             heroChoice = scanner.nextInt();
-            thisHero = gameData.getHero(heroChoice);
+            thisHero = gameData.getHero(heroChoice+1);
             System.out.println("What would you like to buy?");
             System.out.println("1. Potion");
             System.out.println("2. Weapon");

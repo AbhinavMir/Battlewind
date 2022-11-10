@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
+/*
+@This is a DB-esque place for us to host game data.
+ */
 public class gameData {
-    /*
-    This is a DB-esque place for us to host game data
-     */
 
     static ArrayList<Characters.Hero> heroes = new ArrayList<>();
 
@@ -21,10 +21,9 @@ public class gameData {
 
     public static void printAllHeroes()
     {
-        for (Characters.Hero hero : heroes)
+        for (int i = 0; i < heroes.size(); i++)
         {
-            System.out.println(hero.getName()+ " " + hero.getLevel() + " " + hero.getExp() + " " + hero.getHp() + " " + hero.getBaseDamage());
-            PrettyPrint.healthBarPrinter(hero.getCurrentHp(), hero.getHp());
+            System.out.println(i+ ": " + "Name: " + heroes.get(i).getName() + " | Level: " + heroes.get(i).getLevel() + " | Damage: " + heroes.get(i).getBaseDamage() + " | Defense: " + heroes.get(i).getDefense() + " | Dodge Chance: " + heroes.get(i).getDodgeChance() + " | Gold: " + heroes.get(i).getGold());
         }
     }
 }

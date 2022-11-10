@@ -5,6 +5,14 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+/*
+A class to handle the battle between the hero and the monster
+Can have one-to-one attack as chosen by user
+A new instance is created when a battle is initiated in COMMON grounds
+Local variable copies are maintained for speed
+@TODO: Improve memory management
+ */
+
 public class Battle {
 
     private final int numHeroes;
@@ -20,12 +28,6 @@ public class Battle {
 
     public static void printBattleCry() {
         System.out.println("            /\\\n" + "/vvvvvvvvvvvv \\--------------------------------------,\n" + "`^^^^^^^^^^^^ /=====================================\"\n" + "            \\/");
-    }
-
-    public static void main(String[] args) {
-        readHandler.init();
-        Battle battle = new Battle(3);
-        battle.startBattle();
     }
 
     public ArrayList<Characters.Monster> getMonsters() {

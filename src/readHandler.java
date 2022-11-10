@@ -243,11 +243,6 @@ public class readHandler {
         }
     }
 
-    public static void main(String[] args) {
-        logger.setLevel(Level.OFF);
-        init();
-    }
-
     public static ArrayList<Characters.Hero> getListOfPaladins() {
         return listOfPaladins;
     }
