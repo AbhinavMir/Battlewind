@@ -1,5 +1,6 @@
 // import arraylist
 
+import java.sql.Time;
 import java.sql.Timestamp;
 
 class itemClass {
@@ -19,26 +20,24 @@ class itemBaseClass {
 }
 
 class Repellent {
-    boolean active;
-    Timestamp time;
+    static boolean active = false;
+    static Timestamp time = new Timestamp(System.currentTimeMillis());
+
+    public static Boolean isActive() {
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        active = currentTime.getTime() - time.getTime() <= 60000;
+
+        return active;
+    }
 
     public void activateRepellent() {
         active = true;
         time = new Timestamp(System.currentTimeMillis());
     }
 
-    public static Boolean isActive() {
-        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-        if (currentTime.getTime() - time.getTime() > 60000) {
-            this.active = false;
-        }
-        else {
-            this.active = true;
-        }
-
-        return this.active;
+    public Repellent() {
+        active = false;
     }
-
 }
 
 class Weapon extends itemBaseClass {
