@@ -185,7 +185,7 @@ public class Battle {
         return true;
     }
 
-    public void spell(Characters.Hero hero, Characters.Monster monster, Characters.Spell spell) {
+    public void spell(Characters.Hero hero, Characters.Monster monster, Spell spell) {
         if (hero.getMp() > spell.manaCost) {
             if (hero.type == Characters.Hero.heroType.SORCERER || hero.type == Characters.Hero.heroType.PALADIN) {
                 int damage = spell.damage + (hero.dexterity / 10000 * spell.damage);

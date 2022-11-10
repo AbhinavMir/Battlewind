@@ -22,9 +22,9 @@ public class readHandler {
     static ArrayList<Characters.Monster> listOfSpirits = new ArrayList<>(); // monsters
     static ArrayList<Characters.Monster> listOfExoskeletons = new ArrayList<>(); // monsters
     static ArrayList<Potion> listOfPotions = new ArrayList<>(); // potions
-    static ArrayList<Characters.Spell> listOfLightningSpells = new ArrayList<>(); // spells
-    static ArrayList<Characters.Spell> listOfFireballSpells = new ArrayList<>(); // spells
-    static ArrayList<Characters.Spell> listOfIceSpells = new ArrayList<>(); // spells
+    static ArrayList<Spell> listOfLightningSpells = new ArrayList<>(); // spells
+    static ArrayList<Spell> listOfFireballSpells = new ArrayList<>(); // spells
+    static ArrayList<Spell> listOfIceSpells = new ArrayList<>(); // spells
     static ArrayList<Weapon> listOfWeapons = new ArrayList<>(); // weapons
     static ArrayList<Armor> listOfArmors = new ArrayList<>();    // armors
     String armory = "Name/cost/required level/damage reduction";
@@ -51,15 +51,15 @@ public class readHandler {
 
     public static void printAllSpells() {
         System.out.println("Lightning Spells:");
-        for (Characters.Spell spell : listOfLightningSpells) {
+        for (Spell spell : listOfLightningSpells) {
             System.out.println(spell.name + PrettyPrint.BLUE + " costs " + spell.cost + PrettyPrint.RESET + " / Required level: " + spell.requiredLevel + " / Damage: " + spell.damage + " / Mana cost: " + spell.manaCost);
         }
         System.out.println("Fireball Spells:");
-        for (Characters.Spell spell : listOfFireballSpells) {
+        for (Spell spell : listOfFireballSpells) {
             System.out.println(spell.name + PrettyPrint.BLUE + " costs " + spell.cost + PrettyPrint.RESET + " / Required level: " + spell.requiredLevel + " / Damage: " + spell.damage + " / Mana cost: " + spell.manaCost);
         }
         System.out.println("Ice Spells:");
-        for (Characters.Spell spell : listOfIceSpells) {
+        for (Spell spell : listOfIceSpells) {
             System.out.println(spell.name + PrettyPrint.BLUE + " costs " + spell.cost + PrettyPrint.RESET + " / Required level: " + spell.requiredLevel + " / Damage: " + spell.damage + " / Mana cost: " + spell.manaCost);
         }
     }
@@ -76,7 +76,7 @@ public class readHandler {
             int requiredLevel = Integer.parseInt(potionDataArray[i * 5 + 2]);
             int attributeIncrease = Integer.parseInt(potionDataArray[i * 5 + 3]);
             String attributeAffected = potionDataArray[i * 5 + 4];
-            Potion potion = new Potion(name, cost, requiredLevel, attributeIncrease, attributeAffected);
+            listOfPotions.add(new Potion(name, cost, requiredLevel, attributeIncrease, attributeAffected));
         }
     }
 
@@ -180,7 +180,7 @@ public class readHandler {
     }
 
     public static void readSpells(String spellData) {
-
+        // Errors out, using manual input
     }
 
     public static void printHeroes(Characters.Hero.heroType type) {
@@ -220,6 +220,7 @@ public class readHandler {
 
         return null;
     }
+
     public static String[] getAllFiles(String path) {
         String[] allDirs;
         File folder = new File(path);
@@ -269,16 +270,21 @@ public class readHandler {
         String lightningSpells = readThisFiles("gameUtils/", "LightningSpells");
         String fireSpells = readThisFiles("gameUtils/", "FireSpells");
         String iceSpells = readThisFiles("gameUtils/", "IceSpells");
+        String weapons = readThisFiles("gameUtils/", "Weaponry");
+        String armors = readThisFiles("gameUtils/", "Armory");
         readHeroes(paladins, Characters.Hero.heroType.PALADIN);
-        readPotions(potions);
-        logger.info("Paladins loaded");
+        try {
+            readPotions(potions);
+        } catch (Exception e) {
+            ManualHandler.loadPotionsManually();
+            System.out.println("Error reading potions");
+        }
         readHeroes(sorcerers, Characters.Hero.heroType.SORCERER);
-        logger.info("Sorcerers loaded");
         readHeroes(warriors, Characters.Hero.heroType.WARRIOR);
-        logger.info("Warriors loaded");
         readMonsters(spirits, Characters.Monster.monsterType.SPIRIT);
-        logger.info("Spirits loaded");
         readMonsters(exoskeletons, Characters.Monster.monsterType.EXOSKELETON);
+        readWeapons(weapons);
+        readArmors(armors);
         try {
             readMonsters(dragons, Characters.Monster.monsterType.DRAGON);
             logger.info("Dragons loaded");
@@ -325,15 +331,15 @@ public class readHandler {
         return listOfPotions;
     }
 
-    public static ArrayList<Characters.Spell> getListOfLightningSpells() {
+    public static ArrayList<Spell> getListOfLightningSpells() {
         return listOfLightningSpells;
     }
 
-    public static ArrayList<Characters.Spell> getListOfFireballSpells() {
+    public static ArrayList<Spell> getListOfFireballSpells() {
         return listOfFireballSpells;
     }
 
-    public static ArrayList<Characters.Spell> getListOfIceSpells() {
+    public static ArrayList<Spell> getListOfIceSpells() {
         return listOfIceSpells;
     }
 

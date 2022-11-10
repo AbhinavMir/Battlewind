@@ -10,9 +10,9 @@ public class Market {
     ArrayList<Potion> potionsOnSale = new ArrayList<Potion>();
     ArrayList<Weapon> weaponsOnSale = new ArrayList<Weapon>();
     ArrayList<Armor> armorsOnSale = new ArrayList<Armor>();
-    ArrayList<Characters.Spell> fireballSpellsOnSale = new ArrayList<Characters.Spell>();
-    ArrayList<Characters.Spell> lightningSpellsOnSale = new ArrayList<Characters.Spell>();
-    ArrayList<Characters.Spell> iceSpellsOnSale = new ArrayList<Characters.Spell>();
+    ArrayList<Spell> fireballSpellsOnSale = new ArrayList<Spell>();
+    ArrayList<Spell> lightningSpellsOnSale = new ArrayList<Spell>();
+    ArrayList<Spell> iceSpellsOnSale = new ArrayList<Spell>();
 
     public Market() {
         potionsOnSale = readHandler.getListOfPotions();
@@ -100,9 +100,9 @@ public class Market {
             } else if (userChoice == 4) {
                 // check if hero is a sorcerer or paladin
                 if (thisHero.type == Characters.Hero.heroType.SORCERER || thisHero.type == Characters.Hero.heroType.PALADIN) {
-                    ArrayList<Characters.Spell> lightningSpells = readHandler.getListOfLightningSpells();
-                    ArrayList<Characters.Spell> fireSpells = readHandler.getListOfFireballSpells();
-                    ArrayList<Characters.Spell> iceSpells = readHandler.getListOfIceSpells();
+                    ArrayList<Spell> lightningSpells = readHandler.getListOfLightningSpells();
+                    ArrayList<Spell> fireSpells = readHandler.getListOfFireballSpells();
+                    ArrayList<Spell> iceSpells = readHandler.getListOfIceSpells();
                     readHandler.printAllSpells();
                     System.out.println("Which type of spell would you like to buy?");
                     System.out.println("1. Lightning" + " " + "2. Fire" + " " + "3. Ice");
@@ -113,7 +113,7 @@ public class Market {
                             System.out.println(i + ". " + lightningSpells.get(i).name + " " + lightningSpells.get(i).cost);
                         }
                         int userChoice4 = scanner.nextInt();
-                        Characters.Spell spell = lightningSpells.get(userChoice4);
+                        Spell spell = lightningSpells.get(userChoice4);
                         if (thisHero.getGold() >= spell.cost) {
                             thisHero.getSpells().add(spell);
                             thisHero.gold -= spell.cost;
@@ -127,7 +127,7 @@ public class Market {
                             System.out.println(i + ". " + fireSpells.get(i).name + " " + fireSpells.get(i).cost);
                         }
                         int userChoice4 = scanner.nextInt();
-                        Characters.Spell spell = fireSpells.get(userChoice4);
+                        Spell spell = fireSpells.get(userChoice4);
                         if (thisHero.getGold() >= spell.cost) {
                             thisHero.getSpells().add(spell);
                             thisHero.gold -= spell.cost;
@@ -141,7 +141,7 @@ public class Market {
                             System.out.println(i + ". " + iceSpells.get(i).name + " " + iceSpells.get(i).cost);
                         }
                         int userChoice4 = scanner.nextInt();
-                        Characters.Spell spell = iceSpells.get(userChoice4);
+                        Spell spell = iceSpells.get(userChoice4);
                         if (thisHero.getGold() >= spell.cost) {
                             thisHero.getSpells().add(spell);
                             thisHero.gold -= spell.cost;

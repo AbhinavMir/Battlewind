@@ -383,19 +383,20 @@ public class Characters {
         }
     }
 
-    class Spell {
-        String name;
-        int cost;
-        int requiredLevel;
-        int damage;
-        int manaCost;
+}
 
-        public Spell(String name, int cost, int requiredLevel, int damage, int manaCost) {
-            this.name = name;
-            this.cost = cost;
-            this.requiredLevel = requiredLevel;
-            this.damage = damage;
-            this.manaCost = manaCost;
-        }
+class Spell {
+    String name;
+    int cost;
+    int requiredLevel;
+    int damage;
+    int manaCost;
+
+    public Spell(String name, int cost, int requiredLevel, int damage, int manaCost) {
+        this.name = name;
+        this.cost = cost;
+        this.requiredLevel = requiredLevel;
+        this.damage = damage;
+        this.manaCost = manaCost;
     }
 }

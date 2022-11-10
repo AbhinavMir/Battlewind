@@ -4,18 +4,165 @@ public class ManualHandler {
     Things that don't work in one go have a backup handler. Use only if the first one doesn't work.
      */
 
-    public static void loadDragonsManually()
+    public static void loadPotionsManually() {
+
+        String name = "";
+        int cost = 0;
+        int requiredLevel = 0;
+        int level = 0;
+        int attributeIncrease = 0;
+        String attributeAffected = "";
+
+        for (int i = 0; i < 6; i++) {
+            if (i == 0) {
+                name = "Healing_Potion";
+                cost = 250;
+                requiredLevel = 1;
+                attributeIncrease = 100;
+                attributeAffected = "Health";
+            } else if (i == 1) {
+                name = "Strength_Potion";
+                cost = 200;
+                requiredLevel = 1;
+                attributeIncrease = 75;
+                attributeAffected = "Strength";
+            } else if (i == 2) {
+                name = "Magic_Potion";
+                cost = 350;
+                requiredLevel = 2;
+                attributeIncrease = 100;
+                attributeAffected = "Mana";
+            } else if (i == 3) {
+                name = "Luck_Elixir";
+                cost = 500;
+                requiredLevel = 4;
+                attributeIncrease = 65;
+                attributeAffected = "Agility";
+            } else if (i == 4) {
+                name = "Mermaid_Tears";
+                cost = 850;
+                requiredLevel = 5;
+                attributeIncrease = 100;
+                attributeAffected = "All Health/Mana/Strength/Agility";
+            } else if (i == 5) {
+                name = "Ambrosia";
+                cost = 1000;
+                requiredLevel = 8;
+                attributeIncrease = 150;
+                attributeAffected = "All Health/Mana/Strength/Dexterity/Defense/Agility";
+            }
+
+            Potion potion = new Potion(name, cost, requiredLevel, attributeIncrease, attributeAffected);
+            readHandler.listOfPotions.add(potion);
+        }
+    }
+
+    public static void loadLightningSpellManually()
     {
+        // Name/cost/required level/damage/mana cost
+        String name = "";
+        int cost = 0;
+        int requiredLevel = 0;
+        int damage = 0;
+        int manaCost = 0;
+
+        for (int i = 0; i < 4; i++) {
+            if (i == 0) {
+                name = "Lightning_Dagger";
+                cost = 400;
+                requiredLevel = 1;
+                damage = 500;
+                manaCost = 150;
+            } else if (i == 1) {
+                name = "Thunder_Blast";
+                cost = 750;
+                requiredLevel = 4;
+                damage = 950;
+                manaCost = 400;
+            } else if (i == 2) {
+                name = "Electric_Arrows";
+                cost = 550;
+                requiredLevel = 5;
+                damage = 650;
+                manaCost = 200;
+            } else if (i == 3) {
+                name = "Spark_Needles";
+                cost = 500;
+                requiredLevel = 2;
+                damage = 600;
+                manaCost = 200;
+            }
+
+            Spell lightningSpell = new Spell(name, cost, requiredLevel, damage, manaCost);
+            readHandler.listOfLightningSpells.add(lightningSpell);
+    }}
+
+    public static void loadFireSpells()
+    {
+        /*
+        Name/cost/required level/damage/mana cost
+Flame_Tornado   700     4   850     300
+Breath_of_Fire  350     1   450     100
+Heat_Wave       450     2   600     150
+Lava_Comet      800     7   1000    550
+Hell_Storm      600     3   950     600
+
+         */
+        String name = "";
+        int cost = 0;
+        int requiredLevel = 0;
+        int damage = 0;
+        int manaCost = 0;
+
+        for (int i = 0; i < 5; i++) {
+            if (i == 0) {
+                name = "Flame_Tornado";
+                cost = 700;
+                requiredLevel = 4;
+                damage = 850;
+                manaCost = 300;
+            } else if (i == 1) {
+                name = "Breath_of_Fire";
+                cost = 350;
+                requiredLevel = 1;
+                damage = 450;
+                manaCost = 100;
+            } else if (i == 2) {
+                name = "Heat_Wave";
+                cost = 450;
+                requiredLevel = 2;
+                damage = 600;
+                manaCost = 150;
+            } else if (i == 3) {
+                name = "Lava_Comet";
+                cost = 800;
+                requiredLevel = 7;
+                damage = 1000;
+                manaCost = 550;
+            } else if (i == 4) {
+                name = "Hell_Storm";
+                cost = 600;
+                requiredLevel = 3;
+                damage = 950;
+                manaCost = 600;
+            }
+
+            Spell fireSpell = new Spell(name, cost, requiredLevel, damage, manaCost);
+            readHandler.listOfFireballSpells.add(fireSpell);
+        }
+    }
+
+
+
+    public static void loadDragonsManually() {
         String name = null;
         int level = 0;
         int damage = 0;
         int defense = 0;
         int dodgeChance = 0;
         // hp = lvl * 100
-        for (int i = 0 ; i <12 ; i++)
-        {
-            switch (i)
-            {
+        for (int i = 0; i < 12; i++) {
+            switch (i) {
                 case 0:
                     name = "Desghidorrah";
                     level = 3;
