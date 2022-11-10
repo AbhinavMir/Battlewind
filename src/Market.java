@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/*
+A module to handle market and merchant (not mentioned programatically)
+Can buy and sell with Gold
+Unlimited supply of items for convenience of tester
+ */
 public class Market {
     ArrayList<Potion> potionsOnSale = new ArrayList<Potion>();
     ArrayList<Weapon> weaponsOnSale = new ArrayList<Weapon>();

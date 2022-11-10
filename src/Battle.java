@@ -12,7 +12,6 @@ A new instance is created when a battle is initiated in COMMON grounds
 Local variable copies are maintained for speed
 @TODO: Improve memory management
  */
-
 public class Battle {
 
     private final int numHeroes;

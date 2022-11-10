@@ -1,116 +1,37 @@
-# CS611-<Assignment Number 3>
-## <League of Valor (Legacy of Ra)>
+# CS611- PA3
+
+## Legends: Monsters And Heroes
+
 ---------------------------------------------------------------------------
-Abhinav Srivastva <br>
+Abhinav Srivastva 
 sabhinav@bu.edu
 
 ## Files
+
 ---------------------------------------------------------------------------
 ### A brief description of each file and what it does
 
-Battle.java - A class to handle the battle between the hero and the monster. Can have one-to-one attack as chosen by user. A new instance is created when a battle is initiated in COMMON grounds. Local variable copies are maintained for speed
+`Battle.java` - A class to handle the battle between the hero and the monster. Can have one-to-one attack as chosen by user. A new instance is created when a battle is initiated in COMMON grounds. Local variable copies are maintained for speed
 
-Launcher.java - 
-ManualHandler.java - A fallback handler when the readHandler fails.
-Market.java
-gameData.java
-readHandler.java
-Characters.java
-Main.java
-Map.java
-PrettyPrint.java
-itemClass.java
+`ManualHandler.java` - A fallback handler when the readHandler fails. Only use for suspected corrupt files.
 
-Object Mapper Classes()
+`Market.java` - A Market module to handle all market interactions.
 
-1.	Paladins Mapper Extends LorHeroes
-a.	A class defined to map Paladins JSON to an array of class objects.
-b.	Paladins are type of members who can be selected by our warrior for their team.
-c.	Chance of stats is a function specifically defined for this game by Abhishek Malakar. Please check the annex document or readme file to know more about chance of stats function
-d.	Health of any fighting character is twice of the damage they can give. Stronger the damage, stronger the character.
-e.	Further, as this is a playable character, their level will increase based on the experience they have.
-f.	Experience increases faster at lower levels and slowly at higher levels, please check chance of stats annex.
-g.	Please note that for this game experience and levels are the same, I have used a formula to ascertain changes.
-2.	Sorcerers Mapper Extends LorHeroes
-a.	A class defined to map Sorcerers JSON to an array of class objects.
-b.	Sorcerers are type of members who can be selected by our warrior for their team.
-c.	Chance of stats is a function specifically defined for this game by Abhishek Malakar. Please check the annex document or readme file to know more about chance of stats function
-d.	Health of any fighting character is twice of the damage they can give. Stronger the damage, stronger the character.
-e.	Further, as this is a playable character, their level will increase based on the experience they have.
-f.	Experience increases faster at lower levels and slowly at higher levels, please check chance of stats annex.
-g.	Please note that for this game experience and levels are the same, I have used a formula to ascertain changes.
-3.	Warriors Mapper Extends LorHeroes
-a.	A class defined to map Warriors JSON to an array of class objects.
-b.	Warriors are type of members who can be selected by our warrior for their team.
-c.	Chance of stats is a function specifically defined for this game by Abhishek Malakar. Please check the annex document or readme file to know more about chance of stats function
-d.	Health of any fighting character is twice of the damage they can give. Stronger the damage, stronger the character.
-e.	Further, as this is a playable character, their level will increase based on the experience they have.
-f.	Experience increases faster at lower levels and slowly at higher levels, please check chance of stats annex.
-g.	Please note that for this game experience and levels are the same, I have used a formula to ascertain changes.
+`gameData.java` - A local DB-type storage for live game data.
 
-4.	Dragon Mapper Extends LorMonsters
-a.	A class defined to map Dragons JSON to an array of class objects.
-b.	Dragons can spawn randomly at any locations depending on the chance of stats.
-c.	Chance of stats is a function specifically defined for this game by Abhishek Malakar. Please check the annex document or readme file to know more about chance of stats function
-d.	Health of any fighting character is twice of the damage they can give. Stronger the damage, stronger the character.
-5.	ExoSkeletons Mapper Extends LorMonsters
-a.	A class defined to map Exo Skeletons JSON to an array of class objects.
-b.	Exo Skeletons can spawn randomly at any locations depending on the chance of stats.
-c.	Chance of stats is a function specifically defined for this game by Abhishek Malakar. Please check the annex document or readme file to know more about chance of stats function
-d.	Health of any fighting character is twice of the damage/attack they can give. Stronger the damage/attack, stronger the character.
-6.	Spirits Mapper Extends LorMonsters
-a.	A class defined to map Spirits JSON to an array of class objects.
-b.	Spirits can spawn randomly at any locations depending on the chance of stats.
-c.	Chance of stats is a function specifically defined for this game by Abhishek Malakar.
-d.	Please check the annex document or readme file to know more about chance of stats function
-e.	Health of any fighting character is twice of the damage/attack they can give. Stronger the damage/attack, stronger the character.
-7.	Fire Spells Mapper Extends LorSpells
-a.	A class defined to map Fire Spells JSON to an array of class objects.
-b.	Fire Spells can be purchased and used by team members as they deem fit during a battle
-c.	Chance of stats is a function specifically defined for this game by Abhishek Malakar.
-d.	Please check the annex document or readme file to know more about chance of stats function
-8.	Ice Spells Mapper Extends LorSpells
-a.	A class defined to map Ice Spells JSON to an array of class objects.
-b.	Ice Spells can be purchased and used by team members as they deem fit during a battle
-c.	Chance of stats is a function specifically defined for this game by Abhishek Malakar.
-d.	Please check the annex document or readme file to know more about chance of stats function
-9.	Lightning Spells Mapper Extends LorSpells
-a.	A class defined to map Lightning Spells JSON to an array of class objects.
-b.	Lightning Spells can be purchased and used by team members as they deem fit during a battle
-c.	Chance of stats is a function specifically defined for this game by Abhishek Malakar.
-d.	Please check the annex document or readme file to know more about chance of stats function
+`readHandler.java` - Handles read/write of data files.
 
-10.	Armory Mapper Extends LorItems
-a.	A class defined to map Armory JSON to Class Object of the same type. The armory objects shall be items of type armory.
-b.	Each team member would be allowed to buy and equip armours of these types but can only buy one of a type. One team member cannot equip two items of the same type
-c.	If a member is not of the required level then they cannot purchase that item, even though it will be shown it shall be marked in red to display unavailability
-11.	Attributes Mapper
-a.	Contains information about the attributes updated by potions
-b.	Usually used as an array of this class
-12.	Potions Mapper Extends LorItems
-a.	A class defined to map Portions JSON to an array of class objects.
-b.	Potions can be purchased and used by team members as they deem fit during a battle to change their attributes
-c.	Effect of a potion stays for 2 battles after which it fades.
-d.	Team members can buy as many potions as they like. As long as they got the money to write a cheque to the merchant
-e.	Chance of stats is a function specifically defined for this game by Abhishek Malakar.
-f.	Please check the annex document or readme file to know more about chance of stats function
-13.	Weaponry Mapper Extends LorItems
-a.	A class defined to map Weapons JSON to an array of class objects.
-b.	Weapons can be purchased and used by team members as they deem fit during a battle to change their attributes
-c.	A team member can hold a weapon as long as they have the required number of hands free. They can choose to store their current weapon to hold another
-d.	Effect of a potion stays for 2 battles after which it fades.
-e.	Team members can buy as many potions as they like. As long as they got the money to write a cheque to the merchant
-f.	Chance of stats is a function specifically defined for this game by Abhishek Malakar.
-g.	Please check the annex document or readme file to know more about chance of stats function
+`Characters.java` - Defines behvaiour and attributes of Heroes and Monsters (both are extended subclasses of Character class.
 
+`Map.java` - Defines the behvaiour on Map. Each map is a 2D array of Tiles.
 
-Battle Interface
-Interface defining the battles in the game
-contains functions to check state of battle (won or not)
-and to begin a battle
-Can be reused
+`PrettyPrint.java` - A simple processor to handle beautified printing. Not essential.
 
-LorBattle Class Implements Battle
+`itemClass.java` - Used to handle Item storage, inventory and such. Heavily extendible.
+
+### Maps
+
+Every `Tile` has a few essential members such as type (enum), x co-ordinate and y co-ordinate. Another important aspect is the `isPlayer` boolean that let's the parser know if there are any players on current tile. `getTileImage()` -  Parses current tile and returns a certain way the tile is to be printed. 
 
 
 
