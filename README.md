@@ -1,10 +1,13 @@
-# CS611- PA3
+## Todo
 
-## Legends: Monsters And Heroes
+[] Add r/w to files in a locked CSV format
+[] Socket programming + multi-party teams
+[] Multi-map systems instead of single, big map
+[] Add story line and more complexity re: objects, characters etc
+[] Improve and debug battles
+[] Allow PvP battles
 
----------------------------------------------------------------------------
-Abhinav Srivastva 
-sabhinav@bu.edu
+Note: Server code should maintain a locked instance of the CSV file for movement and such and is updated on every input.
 
 ## Files
 
