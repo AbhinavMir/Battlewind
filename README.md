@@ -1,5 +1,7 @@
 ## Todo
 
+## !CLEANUP LEFT!
+
 [ ] Add r/w to files in a locked CSV format 
 
 [ ] Socket programming + multi-party teams
